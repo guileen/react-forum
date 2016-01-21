@@ -5,5 +5,5 @@ A forum base on React.
 Read CONTRIBUTE before contribute.
 
 # Tasks
-- [] npm test
-- [] Github login
+- [ ] npm test
+- [ ] Github login
