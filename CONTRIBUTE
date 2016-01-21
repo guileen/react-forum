@@ -1,0 +1,19 @@
+Contribut Rules:
+* 4 space indent, NOT <Tab>.
+* No trail space.
+* Semicolon-less if possible.
+* Code is document, make sure every variable is suitable.
+* Complex params must have document.
+* Use ES2015 features AMAP.
+* Don't add dependencies without permit.
+* Don't write code of same feature with existing code. Refactor existing code.
+* Make sure your code is tested.
+* Build automatically.
+* Commit with suitable message.
+* Don't commit on `master`, `master` will only merge stable code.
+* Branch `develop` will use to be develop staffs and merge other branches.
+* New branch name should start with `feature-` `refactor-` `fix-`.
+* Release with `git tag`.
+* Use decent English as possible.
+
+Run `contrib/init-dev.sh` first.
