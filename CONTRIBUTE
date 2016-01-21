@@ -1,10 +1,10 @@
 Contribut Rules:
+* Run `contrib/init-dev.sh` first.
 * Pretent that you can use decent English.
-* If you don not like some code, do not make another. Use it or reactor it.
+* You should use enable editorconfig plugin on your editor.
+* You should use enable eslint plugin on your editor.
 
-* 4 space indent, NOT <Tab>.
-* No trail space.
-* No semicolon at the end of lines in *.js code.
+* If you don not like some code, do not make another. Use it or reactor it.
 * Code is document, make sure every variable is suitable.
 * Complex argument must write comment.
 * Use ES2015 features if possible.
@@ -21,4 +21,3 @@ Contribut Rules:
 * New branch name should start with `feature-` `refactor-` `fix-`.
 * Release with `git tag`.
 
-Run `contrib/init-dev.sh` first.
