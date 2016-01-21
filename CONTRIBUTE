@@ -1,19 +1,24 @@
 Contribut Rules:
+* Pretent that you can use decent English.
+* If you don not like some code, do not make another. Use it or reactor it.
+
 * 4 space indent, NOT <Tab>.
 * No trail space.
-* Semicolon-less if possible.
+* No semicolon at the end of lines in *.js code.
 * Code is document, make sure every variable is suitable.
-* Complex params must have document.
-* Use ES2015 features AMAP.
+* Complex argument must write comment.
+* Use ES2015 features if possible.
 * Don't add dependencies without permit.
-* Don't write code of same feature with existing code. Refactor existing code.
+
 * Make sure your code is tested.
 * Build automatically.
+
+* Don't commit file in 0777 mode.NOTE for windows user.
+* Don't commit line end with CRLF, commit with LF. NOTE for windows user.
 * Commit with suitable message.
 * Don't commit on `master`, `master` will only merge stable code.
 * Branch `develop` will use to be develop staffs and merge other branches.
 * New branch name should start with `feature-` `refactor-` `fix-`.
 * Release with `git tag`.
-* Use decent English as possible.
 
 Run `contrib/init-dev.sh` first.
