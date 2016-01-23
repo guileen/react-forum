@@ -7,6 +7,7 @@ Read CONTRIBUTE before contribute.
 # Tasks
 - [x] Framework: webpack, babel, redux, react, dev-server.
 - [x] react-router integration.
+- [x] Example Component and Action.
 - [ ] material-ui integration.
 - [ ] npm test
 - [ ] Github login

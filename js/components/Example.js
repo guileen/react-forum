@@ -1,13 +1,13 @@
 import React, {Component} from 'react'
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
-import * as ExampleAction from '../actions/ExampleAction'
+import * as ExampleActions from '../actions/ExampleActions'
 import styles from '../../css/app.css'
 
 class Example extends Component {
   render() {
     const {title, dispatch} = this.props
-    const actions = bindActionCreators(ExampleAction, dispatch)
+    const actions = bindActionCreators(ExampleActions, dispatch)
     return (
         <div>
           <h1 className={styles.text}>Welcome {title}!</h1>
