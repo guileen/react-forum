@@ -1,24 +1,21 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {bindActionCreators} from 'redux'
-import * as HomeActions from '../actions/HomeActions'
-import styles from '../../css/app.css'
+import {Link} from 'react-router'
 
 class Home extends Component {
-  propTypes: {
-    title: React.PropTypes.string.isRequired,
-    dispatch : React.PropTypes.string.isRequired,
-  }
 
   render() {
-    const {title, dispatch} = this.props
-    const actions = bindActionCreators(HomeActions, dispatch)
     return (
       <main>
-        <h1 className={styles.text}>Welcome {title}!</h1>
-        <button onClick={e => actions.changeTitle(prompt())}>
-          Update Title
-        </button>
+        <Link to="/">Home</Link>
+        <Link to="/example">Example</Link>
+        <Link to="/about">About</Link>
+        <Link to="/nomatch">NoMatch</Link>
+
+
+        {/* details */}
+        {this.props.children}
+
       </main>
     )
   }

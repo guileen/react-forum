@@ -1,8 +1,9 @@
 import React from 'react'
 import {Provider} from 'react-redux'
 import configureStore from '../store/configureStore'
-import Home from '../components/Home'
+// import Home from '../components/Home'
 import {renderDevTools} from '../utils/devTools'
+import routes from '../routes'
 
 const store = configureStore()
 
@@ -13,7 +14,7 @@ export default React.createClass({
 
         {/* <Home /> is your app entry point */}
         <Provider store={store}>
-          <Home />
+          {routes}
         </Provider>
 
         {/* only renders when running in DEV mode */
