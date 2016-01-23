@@ -36,7 +36,7 @@
 /**
  * ES6
  */
-    "no-var": 1,                     // http://eslint.org/docs/rules/no-var
+    "no-var": 0,                     // http://eslint.org/docs/rules/no-var
     "prefer-const": 1,               // http://eslint.org/docs/rules/prefer-const
 
 /**
