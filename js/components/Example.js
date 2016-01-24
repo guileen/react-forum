@@ -6,12 +6,13 @@ import styles from '../../css/app.css'
 
 class Example extends Component {
   render() {
+    console.log('calling render')
     const {title, dispatch} = this.props
     const actions = bindActionCreators(ExampleActions, dispatch)
     return (
         <div>
           <h1 className={styles.text}>Welcome {title}!</h1>
-          <button onClick={e => actions.changeTitle(prompt())}>
+          <button onClick={e => actions.changeTitle('' + Date.now())}>
             Update Title
           </button>
         </div>

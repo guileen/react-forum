@@ -5,4 +5,4 @@ then
     echo "You cannot commit in master!"
     exit 1
 fi
-eslint --fix . && npm test
+eslint --fix js
