@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router'
+import NavBar from './NavBar'
 
 class Home extends Component {
 
@@ -11,6 +12,7 @@ class Home extends Component {
         <Link to="/example">Example</Link>
         <Link to="/about">About</Link>
         <Link to="/nomatch">NoMatch</Link>
+        <NavBar/>
 
 
         {/* details */}
