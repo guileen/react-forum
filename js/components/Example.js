@@ -6,7 +6,6 @@ import styles from '../../css/app.css'
 
 class Example extends Component {
   render() {
-    console.log('calling render')
     const {title, dispatch} = this.props
     const actions = bindActionCreators(ExampleActions, dispatch)
     return (
