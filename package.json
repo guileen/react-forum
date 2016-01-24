@@ -5,7 +5,7 @@
     "start": "DEBUG=true node server.js",
     "build": "webpack -p --config webpack.production.js",
     "build-dev": "webpack -p",
-    "test": "echo jest"
+    "test": "jest"
   },
   "jest": {
     "scriptPreprocessor": "<rootDir>/jest-pre",

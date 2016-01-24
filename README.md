@@ -9,7 +9,7 @@ Read CONTRIBUTE before contribute.
 - [x] react-router integration.
 - [x] Example Component and Action.
 - [ ] material-ui integration.
-- [-] npm test. use jest.
+- [x] npm test. use jest.
 - [ ] Github login
 - [ ] Make empty components.
 - [ ] Action:AccountActions  signin, signout, updateProfile, updateSettings
