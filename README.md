@@ -1,8 +1,23 @@
 # react-forum
 A forum base on React.
 
+# Run Dev
+
+```
+git clone git@github.com:guileen/react-forum.git
+npm install
+```
+Open `http://localhost:3000` in browser.
+
+# Run Test
+
+```
+npm test
+```
+
 # Contribute
 Read CONTRIBUTE before contribute.
+
 
 # TODO
 - [x] Framework: webpack, babel, redux, react, dev-server.
