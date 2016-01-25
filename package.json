@@ -44,16 +44,19 @@
     "express": "^4.13.3",
     "extract-text-webpack-plugin": "^1.0.1",
     "jest-cli": "^0.8.2",
+    "koa": "^1.1.2",
     "path": "^0.12.7",
     "postcss-loader": "^0.8.0",
     "react-addons-test-utils": "^0.14.6",
     "react-transform-catch-errors": "^1.0.1",
     "react-transform-hmr": "^1.0.1",
     "redbox-react": "^1.2.0",
-    "redux-devtools": "^2.1.5",
+    "redux-devtools": "^3.0.1",
+    "redux-devtools-dock-monitor": "^1.0.1",
+    "redux-devtools-log-monitor": "^1.0.2",
     "style-loader": "^0.13.0",
     "webpack": "^1.12.11",
-    "webpack-dev-middleware": "^1.4.0",
+    "webpack-dev-middleware": "^1.5.1",
     "webpack-hot-middleware": "^2.6.0"
   }
 }
