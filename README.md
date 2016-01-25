@@ -5,10 +5,23 @@ A forum base on React.
 
 ```
 git clone git@github.com:guileen/react-forum.git
+cd react-forum
 npm install
+
+cd server
+npm install
+
+cd ..
 npm start
 ```
+
 Open `http://localhost:3000` in browser.
+
+You should have `node-dev` `jest-cli` installed.
+
+```
+npm install -g node-dev jest-cli
+```
 
 # Run Test
 
