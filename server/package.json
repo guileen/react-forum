@@ -1,0 +1,18 @@
+{
+  "private": true,
+  "name": "react-forum-server",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "guileen@gmail.com",
+  "license": "ISC",
+  "dependencies": {
+    "koa": "^1.1.2",
+    "koa-router": "^5.3.0",
+    "simple-oauth2": "^0.5.0"
+  }
+}
