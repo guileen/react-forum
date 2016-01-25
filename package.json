@@ -2,7 +2,7 @@
   "name": "react-forum",
   "version": "0.1.0",
   "scripts": {
-    "start": "DEBUG=true node server.js",
+    "start": "DEBUG=true node-dev server.js",
     "build": "webpack -p --config webpack.production.js",
     "build-dev": "webpack -p",
     "test": "jest"
@@ -20,7 +20,6 @@
   "dependencies": {
     "es6-promise": "^3.0.2",
     "express": "^4.13.4",
-    "history": "^2.0.0-rc2",
     "lodash": "^4.0.0",
     "material-ui": "^0.14.2",
     "react": "^0.14.6",
