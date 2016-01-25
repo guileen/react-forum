@@ -6,6 +6,7 @@ A forum base on React.
 ```
 git clone git@github.com:guileen/react-forum.git
 npm install
+npm start
 ```
 Open `http://localhost:3000` in browser.
 
@@ -25,7 +26,9 @@ Read CONTRIBUTE before contribute.
 - [x] Example Component and Action.
 - [x] material-ui integration.
 - [x] npm test. use jest.
-- [ ] Github login
+- [x] Github oauth integration.
+- [ ] Server side storage.
+- [ ] Session and login.
 - [ ] Make empty components.
 - [ ] material-ui theme, styles.
 - [ ] Action:AccountActions  signin, signout, updateProfile, updateSettings
