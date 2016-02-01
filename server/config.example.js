@@ -1,5 +1,10 @@
 module.exports = {
   baseUrl: 'http://localhost:3000',
+  db: __dirname + './db/main',
+  redis: {
+    host: 'localhost',
+    port: 6379
+  },
   oauth2: {
     github: {
       clientID: '892b3b191b291a5c6e70',

@@ -1,3 +1,4 @@
+'use strict'
 var router = require('./router')
 var oauth2 = require('simple-oauth2')
 var qs = require('querystring')
@@ -5,10 +6,10 @@ var config = require('../config')
 
 function initOauthMap(confMap, baseUrl) {
   var oauthMap = {}
-  for (var k in confMap) {
-    var conf = confMap[k]
+  for (let k in confMap) {
+    let conf = confMap[k]
     oauthMap[k] = oauth2(conf)
-    var uri = conf.redirectUri
+    let uri = conf.redirectUri
     uri = uri.startsWith('http') ? uri : (baseUrl + uri)
     console.log(uri)
     oauthMap[k].redirectUri = uri
@@ -20,7 +21,7 @@ function initOauthMap(confMap, baseUrl) {
   }
   return oauthMap
 }
-var oauthMap = initOauthMap(config.oauth2, config.baseUrl)
+const oauthMap = initOauthMap(config.oauth2, config.baseUrl)
 
 router.get('/auth/oauth2/:platform', function*() {
   var oauth = oauthMap[this.params.platform]
@@ -36,7 +37,7 @@ router.get('/oauth2-callback/:platform', function*() {
   var code = this.query.code
   var state = this.query.state
   var oauth = oauthMap[this.params.platform]
-  if(!oauth || state != config.oauth2[this.params.platform].state) {
+  if (!oauth || state !== config.oauth2[this.params.platform].state) {
     this.body = 'Invalid'
     return
   }
@@ -49,7 +50,7 @@ router.get('/oauth2-callback/:platform', function*() {
       console.log('Access Token Error', err.message)
     }
     var token = result
-    if(~result.indexOf('&')) {
+    if (result.includes('&')) {
       token = qs.parse(result).access_token
     }
     console.log('token:', token)

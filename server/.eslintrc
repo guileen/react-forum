@@ -31,13 +31,13 @@
  * Strict mode
  */
     // babel inserts "use strict"; for us
-    "strict": [2, "never"],          // http://eslint.org/docs/rules/strict
+    "strict": [0, "never"],          // http://eslint.org/docs/rules/strict
 
 /**
  * ES6
  */
     "no-var": 0,                     // http://eslint.org/docs/rules/no-var
-    "prefer-const": 1,               // http://eslint.org/docs/rules/prefer-const
+    "prefer-const": 0,               // http://eslint.org/docs/rules/prefer-const
 
 /**
  * Variables

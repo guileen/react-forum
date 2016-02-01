@@ -1,5 +1,6 @@
-var app = require('koa')()
-var routes = require('./routes')
+global.config = require('./config')
+const app = require('koa')()
+const routes = require('./routes')
 module.exports = app
 
 app.use(routes.routes())
