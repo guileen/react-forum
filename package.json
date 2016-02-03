@@ -2,10 +2,10 @@
   "name": "react-forum",
   "version": "0.1.0",
   "scripts": {
-    "start": "DEBUG=true node-dev server.js",
+    "start": "DEBUG=true node-dev --harmony server.js",
     "build": "webpack -p --config webpack.production.js",
     "build-dev": "webpack -p",
-    "test": "jest"
+    "test": "jest ./js"
   },
   "jest": {
     "scriptPreprocessor": "<rootDir>/jest-pre",
@@ -34,6 +34,7 @@
     "babel-core": "^6.4.5",
     "babel-jest": "^6.0.1",
     "babel-loader": "^6.2.1",
+    "babel-plugin-add-module-exports": "^0.1.2",
     "babel-plugin-react-display-name": "^2.0.0",
     "babel-plugin-react-transform": "^2.0.0",
     "babel-preset-es2015": "^6.3.13",
