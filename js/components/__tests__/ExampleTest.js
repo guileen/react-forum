@@ -1,7 +1,7 @@
 jest.dontMock('../Example')
 import React from 'react'
 import ReactDOM from 'react-dom'
-import {renderIntoDocument, Simulate, findRenderedDOMComponentWithTag} from 'react-addons-test-utils'
+import {renderIntoDocument, Simulate} from 'react-addons-test-utils'
 
 const Example = require('../Example')
 
@@ -11,9 +11,8 @@ describe('Example', () => {
         <Example title="hello"/>
     )
     var exampleNode = ReactDOM.findDOMNode(example)
-    expect(exampleNode).toBeOK()
-    Simulate.click(
-      findRenderedDOMComponentWithTag(exampleNode, 'button')
-    )
+    var button = exampleNode.getElementsByTagName('button')[0]
+    expect(exampleNode).not.toBeNull()
+    Simulate.click(button)
   })
 })
