@@ -4,6 +4,7 @@ import configureStore from '../store/configureStore'
 // import Home from '../components/Home'
 import DevTools from '../utils/devTools'
 import routes from '../routes'
+require('../../css/app.css')
 
 const store = configureStore()
 
