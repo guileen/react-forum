@@ -2,12 +2,10 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { actions as headerActions } from '../redux/modules/header'
 import AppBar from 'material-ui/lib/app-bar'
+import IconButton from 'material-ui/lib/icon-button'
 import LeftNav from 'material-ui/lib/left-nav'
 import MenuItem from 'material-ui/lib/menus/menu-item'
-
-function handleTouchTap() {
-  alert('onTouchTap triggered on the title component')
-}
+import NavigationClose from 'material-ui/lib/svg-icons/navigation/close'
 
 class HeaderBar extends React.Component {
   static propTypes = {
@@ -19,11 +17,15 @@ class HeaderBar extends React.Component {
     return (
       <div>
         <AppBar title='hello'
-        onLeftIconButtonTouchTap={this.props.toggleNav}
-        onTitleTouchTap={handleTouchTap}
+          onLeftIconButtonTouchTap={this.props.toggleNav}
         />
         <LeftNav open={this.props.open}>
-          <AppBar/>
+          <AppBar
+            style={{
+              backgroundColor: '#666666'
+            }}
+            iconElementLeft={<IconButton onTouchTap={this.props.toggleNav}><NavigationClose /></IconButton>}
+          />
           <MenuItem>Login</MenuItem>
         </LeftNav>
       </div>
