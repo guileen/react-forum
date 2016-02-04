@@ -1,4 +1,6 @@
 import React, { PropTypes } from 'react'
+import HeaderBar from '../../components/HeaderBar'
+import FooterBar from '../../components/FooterBar'
 import '../../styles/core.scss'
 
 // Note: Stateless/function components *will not* hot reload!
@@ -13,9 +15,11 @@ import '../../styles/core.scss'
 function CoreLayout ({ children }) {
   return (
     <div className='page-container'>
+      <HeaderBar/>
       <div className='view-container'>
         {children}
       </div>
+      <FooterBar/>
     </div>
   )
 }

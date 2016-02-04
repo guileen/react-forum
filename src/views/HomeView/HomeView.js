@@ -45,6 +45,10 @@ export class HomeView extends React.Component {
                 onClick={this.props.doubleAsync}>
           Double (Async)
         </button>
+        {' '}
+        <button className='btn btn-default'>
+          <a href='/v1/auth/oauth2/github'>Github Login</a>
+        </button>
         <hr />
         <Link to='/404'>Go to 404 Page</Link>
       </div>
