@@ -1,18 +1,10 @@
-React Redux Starter Kit
+react-forum
 =======================
 
-[![Join the chat at https://gitter.im/davezuko/react-redux-starter-kit](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/davezuko/react-redux-starter-kit?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Build Status](https://travis-ci.org/davezuko/react-redux-starter-kit.svg?branch=master)](https://travis-ci.org/davezuko/react-redux-starter-kit?branch=master)
 [![dependencies](https://david-dm.org/davezuko/react-redux-starter-kit.svg)](https://david-dm.org/davezuko/react-redux-starter-kit)
 [![devDependency Status](https://david-dm.org/davezuko/react-redux-starter-kit/dev-status.svg)](https://david-dm.org/davezuko/react-redux-starter-kit#info=devDependencies)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
-
-> ### Want Semicolons?
-> After installing npm dependencies, open `.eslintrc`, change the `semi` rule from `never` to `always`, and then run `npm run lint:fix` -- Easy as that! Alternatively, use the same npm script after installing and extending your preferred ESLint configuration; it's easy to customize the project's code style to suit your team's needs. See, we can coexist peacefully.
-
-This starter kit is designed to get you up and running with a bunch of awesome new front-end technologies, all on top of a configurable, feature-rich webpack build system that's already setup to provide hot reloading, CSS modules with Sass support, unit testing, code coverage reports, bundle splitting, and a whole lot more.
-
-The primary goal of this project is to remain as **unopinionated** as possible. Its purpose is not to dictate your project structure or to demonstrate a complete sample application, but to provide a set of tools intended to make front-end development robust, easy, and, most importantly, fun. Check out the full feature list below!
 
 Table of Contents
 -----------------
@@ -266,3 +258,40 @@ While this is common to any sizable application, it's worth noting for those who
 ```
 	"folder_exclude_patterns": [".svn",	".git",	".hg", "CVS",	"node_modules",	"dist"]
 ```
+
+# TODO
+- [x] Framework: webpack, babel, redux, react, dev-server.
+- [x] react-router integration.
+- [x] Example Component and Action.
+- [x] material-ui integration.
+- [x] npm test. use jest.
+- [x] Github oauth integration.
+- [ ] Server side storage.
+- [ ] Session and login.
+- [ ] Make empty components.
+- [ ] material-ui theme, styles.
+- [ ] Action:AccountActions  signin, signout, updateProfile, updateSettings
+- [ ] Component:Home page base layout.
+- [ ] Component:Navbar
+- [ ] Component:About page.
+- [ ] Component:SignIn page.
+- [ ] Component:Profile page.
+- [ ] Component:NewPost page
+- [ ] Component:PostEditor
+- [ ] Component:PostList page.
+- [ ] Component:PostListItem
+- [ ] Component:Avatar
+- [ ] Component:PostDetail page.
+- [ ] Component:Post
+- [ ] Component:Comment
+- [ ] Component:CommentEditor
+- [ ] Component:NotificationList page
+- [ ] Component:NotificationListItem
+- [ ] Component:UserDetail page.
+- [ ] Component:UserCard
+- [ ] Action:NotificationActions
+- [ ] Action:UserActions    show, follow, unfollow, search
+- [ ] Action:PostActions    fetchlist show add delete reply  star  subscribe search
+- [ ] Feature: User settings page
+- [ ] Feed support?
+- [ ] SEO ? Server side react rendering.
