@@ -1,9 +1,9 @@
 react-forum
 =======================
 
-[![Build Status](https://travis-ci.org/davezuko/react-redux-starter-kit.svg?branch=master)](https://travis-ci.org/davezuko/react-redux-starter-kit?branch=master)
-[![dependencies](https://david-dm.org/davezuko/react-redux-starter-kit.svg)](https://david-dm.org/davezuko/react-redux-starter-kit)
-[![devDependency Status](https://david-dm.org/davezuko/react-redux-starter-kit/dev-status.svg)](https://david-dm.org/davezuko/react-redux-starter-kit#info=devDependencies)
+[![Build Status](https://travis-ci.org/guileen/react-forum.svg?branch=master)](https://travis-ci.org/guileen/react-forum?branch=master)
+[![dependencies](https://david-dm.org/guileen/react-forum.svg)](https://david-dm.org/guileen/react-forum)
+[![devDependency Status](https://david-dm.org/guileen/react-forum/dev-status.svg)](https://david-dm.org/guileen/react-forum#info=devDependencies)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
 
 Table of Contents
@@ -68,8 +68,8 @@ Getting Started
 Just clone the repo and install the necessary node modules:
 
 ```shell
-$ git clone https://github.com/davezuko/react-redux-starter-kit.git
-$ cd react-redux-starter-kit
+$ git clone https://github.com/guileen/react-forum.git
+$ cd react-forum
 $ npm install                   # Install Node modules listed in ./package.json (may take a while the first time)
 $ npm start                     # Compile and launch
 ```
