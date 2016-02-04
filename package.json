@@ -46,9 +46,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/davezuko/react-redux-starter-kit.git"
+    "url": "git+https://github.com/guileen/react-forum.git"
   },
-  "author": "David Zukowski <david@zuko.me> (http://zuko.me)",
+  "author": "Gui Lin <guileen@gmail.com> (http://guileen.github.io)",
   "license": "MIT",
   "dependencies": {
     "better-npm-run": "0.0.5",
