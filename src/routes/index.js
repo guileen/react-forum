@@ -14,6 +14,7 @@ export default (store) => (
   <Route path='/' component={CoreLayout}>
     <IndexRoute component={HomeView} />
     <Route path='/404' component={NotFoundView} />
-    <Redirect from='*' to='/404' />
+    <Route path='*' component={NotFoundView} />
+    {/* <Redirect from='*' to='/404' /> */}
   </Route>
 )
