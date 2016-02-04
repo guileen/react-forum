@@ -1,5 +1,6 @@
 global.config = require('./config')
-const app = require('koa')()
+const Koa = require('koa')
+const app = new Koa()
 const routes = require('./routes')
 module.exports = app
 

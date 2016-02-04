@@ -23,22 +23,22 @@ function initOauthMap(confMap, baseUrl) {
 }
 const oauthMap = initOauthMap(config.oauth2, config.baseUrl)
 
-router.get('/auth/oauth2/:platform', function*() {
-  var oauth = oauthMap[this.params.platform]
+router.get('/auth/oauth2/:platform', function(ctx) {
+  var oauth = oauthMap[ctx.params.platform]
   if (oauth) {
-    this.redirect(oauth.authUrl)
+    ctx.redirect(oauth.authUrl)
   } else {
     throw new Error('no such platform')
   }
 })
 
-router.get('/oauth2-callback/:platform', function*() {
+router.get('/oauth2-callback/:platform', function(ctx) {
 // http://localhost:3000/oauth2-callback/github?code=c0201ef0bce39b98ef3b&state=1234
-  var code = this.query.code
-  var state = this.query.state
-  var oauth = oauthMap[this.params.platform]
-  if (!oauth || state !== config.oauth2[this.params.platform].state) {
-    this.body = 'Invalid'
+  var code = ctx.query.code
+  var state = ctx.query.state
+  var oauth = oauthMap[ctx.params.platform]
+  if (!oauth || state !== config.oauth2[ctx.params.platform].state) {
+    ctx.body = 'Invalid'
     return
   }
   // TODO normalized save token and etc.
@@ -55,5 +55,5 @@ router.get('/oauth2-callback/:platform', function*() {
     }
     console.log('token:', token)
   })
-  this.body = 'callbacked'
+  ctx.body = 'callbacked'
 })

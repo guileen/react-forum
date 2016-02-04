@@ -1,5 +1,5 @@
 module.exports = {
-  baseUrl: 'http://localhost:3000',
+  baseUrl: 'http://localhost:3000/v1',
   db: __dirname + './db/main',
   redis: {
     host: 'localhost',
