@@ -51,7 +51,7 @@
   "author": "Gui Lin <guileen@gmail.com> (http://guileen.github.io)",
   "license": "MIT",
   "dependencies": {
-    "better-npm-run": "0.0.5",
+    "better-npm-run": "0.0.6",
     "debug": "^2.2.0",
     "dotenv": "^2.0.0",
     "history": "^2.0.0-rc2",
@@ -86,13 +86,13 @@
     "chai": "^3.4.1",
     "chai-as-promised": "^5.1.0",
     "chai-enzyme": "^0.3.0",
-    "cheerio": "^0.19.0",
+    "cheerio": "^0.20.0",
     "css-loader": "^0.23.0",
     "cssnano": "^3.3.2",
     "enzyme": "^1.5.0",
     "eslint": "^1.10.3",
     "eslint-config-standard": "^4.4.0",
-    "eslint-config-standard-react": "^1.2.1",
+    "eslint-config-standard-react": "^2.0.0",
     "eslint-loader": "^1.1.1",
     "eslint-plugin-babel": "^3.0.0",
     "eslint-plugin-flow-vars": "^0.1.3",
@@ -129,7 +129,7 @@
     "sinon-chai": "^2.8.0",
     "style-loader": "^0.13.0",
     "url-loader": "^0.5.6",
-    "webpack": "1.12.9",
+    "webpack": "1.12.13",
     "webpack-dev-middleware": "^1.4.0",
     "webpack-hot-middleware": "^2.6.0"
   }
