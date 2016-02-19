@@ -1,5 +1,6 @@
 import Koa from 'koa'
 import convert from 'koa-convert'
+import compose from 'koa-compose'
 import webpack from 'webpack'
 import webpackConfig from '../build/webpack.config'
 import historyApiFallback from 'koa-connect-history-api-fallback'
@@ -11,14 +12,15 @@ import apiApp from './app'
 const debug = _debug('app:server')
 const paths = config.utils_paths
 const app = new Koa()
-const apiHandler = apiApp.callback()
+console.log(apiApp.middleware)
+const apiMiddlewares = compose(apiApp.middleware)
 
-app.use((ctx, next) => {
+app.use(async (ctx, next) => {
   if (ctx.url.startsWith('/v1/')) {
     ctx.req.url = ctx.req.url.slice('/v1'.length)
-    apiHandler(ctx.req, ctx.res)
+    await apiMiddlewares(ctx, next)
   } else {
-    next()
+    await next()
   }
 })
 

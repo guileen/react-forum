@@ -1,3 +1,3 @@
-var UserProvider = require('./providers/UserProvider')
+import {userProvider} from './providers'
 
-Object.assign(exports, UserProvider)
+Object.assign(exports, userProvider)

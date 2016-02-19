@@ -1,4 +1,4 @@
-class LevelDB {
+export default class LevelDB {
   constructor(db) {
     this.db = db
   }
@@ -49,7 +49,7 @@ class LevelDB {
     return (callback) => {
       let err = null
       const results = []
-      const stream = db.createReadStream(opts)
+      const stream = this.db.createReadStream(opts)
       stream.on('data', (data) => {
         results.push(data)
       })
@@ -62,5 +62,3 @@ class LevelDB {
     }
   }
 }
-
-module.exports = LevelDB

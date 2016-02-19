@@ -1,6 +1,4 @@
-var levelup = require('levelup')
-var wrapper = require('co-wrapper')
+import LDB from './ldb'
+import config from '../../config'
 
-var dbOpts = global.dbOpts
-var db = levelup(dbOpts)
-module.exports = wrapper(db)
+export default new LDB(config.db)
