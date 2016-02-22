@@ -1,6 +1,8 @@
+import path from 'path'
+
 module.exports = {
   baseUrl: 'http://localhost:3000/v1',
-  db: __dirname + '/../db/main',
+  db: path.join(__dirname, '../db/main'),
   redis: {
     host: 'localhost',
     port: 6379

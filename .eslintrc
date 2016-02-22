@@ -27,6 +27,7 @@
     "max-len": [2, 120, 2],
     "flow-vars/define-flow-type": 1,
     "flow-vars/use-flow-type": 1,
+    "arrow-parens": [0, "as-needed"],
     "react/jsx-closing-bracket-location": 0
   }
 }
