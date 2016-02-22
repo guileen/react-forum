@@ -1,7 +1,8 @@
 import router from './router'
 
 // load all routes
-require('./auth')
+import './auth'
+import './user'
 
 router.get('/', function(ctx, next) {
   ctx.body = {

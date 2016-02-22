@@ -4,7 +4,7 @@ import oauth2 from 'simple-oauth2'
 import qs from 'querystring'
 import router from './router'
 import Promise from 'bluebird'
-import {userProvider, sessionProvider} from '../services/providers'
+import {sessionProvider} from '../services/providers'
 import {getOrCreateUser} from '../services/oauthService'
 
 function initOauthMap(confMap, baseUrl) {
@@ -62,21 +62,6 @@ router.get('/oauth2-callback/:site', async (ctx) => {
   const sid = await sessionProvider.bindUser(user.id)
   ctx.cookies.set('sid', sid)
   ctx.redirect('/')
-})
-
-router.get('/profile', async (ctx) => {
-  if (ctx.state.userId) {
-    ctx.body = await userProvider.get(ctx.state.userId)
-  }
-})
-
-router.get('/test', (ctx) => {
-  console.log('start')
-  var s = crypto.randomBytes(32).toString('base64')
-  s = s.replace(/[\+\=\/]/g, '').substr(0, 32)
-  ctx.cookies.set('sid', s)
-  var s2 = ctx.cookies.get('sid')
-  ctx.body = s2
 })
 
 router.get('/500', async (ctx) => {

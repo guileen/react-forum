@@ -266,8 +266,8 @@ While this is common to any sizable application, it's worth noting for those who
 - [x] material-ui integration.
 - [x] npm test. use jest.
 - [x] Github oauth integration.
-- [ ] Server side storage.
-- [ ] Session and login.
+- [x] Server side storage.
+- [x] Session and login.
 - [ ] Make empty components.
 - [ ] material-ui theme, styles.
 - [ ] Action:AccountActions  signin, signout, updateProfile, updateSettings
