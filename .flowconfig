@@ -14,13 +14,16 @@
 
 [libs]
 ./node_modules/flow-interfaces/interfaces/
+./interfaces/
 
 [options]
 module.system=haste
 esproposal.class_static_fields=enable
 esproposal.class_instance_fields=enable
+esproposal.decorators=ignore
 
-module.name_mapper='.*\.scss$' -> 'CSSModule'
+module.name_mapper='.*\.\(scss\|css\)$' -> 'CSSModule'
+module.name_mapper='.*\.\(jpg\|jpeg\|gif\|svg\|png\)$' -> 'Image'
 module.name_mapper='^components\/\(.*\)$' -> '<PROJECT_ROOT>/src/components/\1'
 module.name_mapper='^components$' -> '<PROJECT_ROOT>/src/components'
 module.name_mapper='^containers\/\(.*\)$' -> '<PROJECT_ROOT>/src/containers/\1'
@@ -28,7 +31,6 @@ module.name_mapper='^containers$' -> '<PROJECT_ROOT>/src/containers'
 module.name_mapper='^layouts\/\(.*\)$' -> '<PROJECT_ROOT>/src/layouts/\1'
 module.name_mapper='^layouts$' -> '<PROJECT_ROOT>/src/layouts'
 module.name_mapper='^redux\/\(.*\)$' -> '<PROJECT_ROOT>/src/redux/\1'
-module.name_mapper='^redux$' -> '<PROJECT_ROOT>/src/redux'
 module.name_mapper='^routes\/\(.*\)$' -> '<PROJECT_ROOT>/src/routes/\1'
 module.name_mapper='^routes$' -> '<PROJECT_ROOT>/src/routes'
 module.name_mapper='^styles\/\(.*\)$' -> '<PROJECT_ROOT>/src/styles/\1'

@@ -13,6 +13,7 @@
   "globals" : {
     "describe"     : false,
     "it"           : false,
+    "Action"       : false,
     "__DEV__"      : false,
     "__PROD__"     : false,
     "__DEBUG__"    : false,

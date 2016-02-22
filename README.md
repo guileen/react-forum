@@ -58,6 +58,8 @@ Features
   * [babel-preset-react-hmre](https://github.com/danmartinez101/babel-preset-react-hmre) for:
     * react-transform-hmr (HMR for React components)
     * redbox-react (visible error reporting for React components)
+  * [babel-plugin-transform-react-constant-elements](https://babeljs.io/docs/plugins/transform-react-constant-elements/) save some memory allocation
+  * [babel-plugin-transform-react-remove-prop-types](https://github.com/oliviertassinari/babel-plugin-transform-react-remove-prop-types) remove `PropTypes`
 * [ESLint](http://eslint.org)
   * Uses [Standard Style](https://github.com/feross/standard) by default, but you're welcome to change this!
   * Includes separate test-specific `.eslintrc` to support chai assertions
@@ -83,14 +85,15 @@ Before delving into the descriptions of each available npm script, here's a brie
 * Compiling the application to disk? Use `npm run compile`.
 * Deploying to an environment? `npm run deploy` can help with that.
 
-**NOTE:** This package makes use of [debug](https://github.com/visionmedia/debug) to improve your debugging experience. For convenience, all of messages are prefixed with `app:*`. If you'd like to to change what debug statements are displayed, you can override the `DEBUG` environment variable to `app:*` via the CLI (e.g. `DEBUG=app:* npm start`) or update the `~/.env` file.
+**NOTE:** This package makes use of [debug](https://github.com/visionmedia/debug) to improve your debugging experience. For convenience, all of messages are prefixed with `app:*`. If you'd like to to change what debug statements are displayed, you can override the `DEBUG` environment variable via the CLI (e.g. `DEBUG=app:* npm start`) or tweak the npm scripts (`betterScripts` in `package.json`).
 
 Great, now that introductions have been made here's everything in full detail:
 
 * `npm start` - Spins up Koa server to serve your app at `localhost:3000`. HMR will be enabled in development.
 * `npm run compile` - Compiles the application to disk (`~/dist` by default).
-* `npm run dev:nw` - Same as `npm start`, but opens the redux devtools in a new window.
-* `npm run dev:no-debug` - Same as `npm start` but disables redux devtools.
+* `npm run dev` - Same as `npm start`, but enables nodemon to automatically restart the server when server-related code is changed.
+* `npm run dev:nw` - Same as `npm run dev`, but opens the redux devtools in a new window.
+* `npm run dev:no-debug` - Same as `npm run dev` but disables redux devtools.
 * `npm run test` - Runs unit tests with Karma and generates a coverage report.
 * `npm run test:dev` - Runs Karma and watches for changes to re-run tests; does not generate coverage reports.
 * `npm run deploy`- Runs linter, tests, and then, on success, compiles your application to disk.
