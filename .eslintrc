@@ -11,6 +11,8 @@
     "browser" : true
   },
   "globals" : {
+    "describe"     : false,
+    "it"           : false,
     "__DEV__"      : false,
     "__PROD__"     : false,
     "__DEBUG__"    : false,
@@ -23,6 +25,7 @@
     "space-infix-ops": 0,
     "max-len": [2, 120, 2],
     "flow-vars/define-flow-type": 1,
-    "flow-vars/use-flow-type": 1
+    "flow-vars/use-flow-type": 1,
+    "react/jsx-closing-bracket-location": 0
   }
 }

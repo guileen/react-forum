@@ -1,4 +1,4 @@
-var router = require('./router')
+import router from './router'
 
 // load all routes
 require('./auth')
@@ -9,5 +9,4 @@ router.get('/', function(ctx, next) {
   }
 })
 
-module.exports = router
-
+export default router

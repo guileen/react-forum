@@ -1,1 +1,2 @@
-module.exports = require('koa-router')()
+import Router from 'koa-router'
+export default new Router()

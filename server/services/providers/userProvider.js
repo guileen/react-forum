@@ -1,7 +1,7 @@
-import Provider from './provider'
+import {EntityProvider} from './provider'
 
-export default class UserProvider extends Provider {
+export default class UserProvider extends EntityProvider {
   constructor(db) {
-    super(db, 'user', 'object')
+    super(db, 'user')
   }
 }

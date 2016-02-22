@@ -25,22 +25,22 @@ function initOauthMap(confMap, baseUrl) {
 }
 const oauthMap = initOauthMap(config.oauth2, config.baseUrl)
 
-router.get('/auth/oauth2/:platform', (ctx) => {
-  var oauth = oauthMap[ctx.params.platform]
+router.get('/auth/oauth2/:site', (ctx) => {
+  var oauth = oauthMap[ctx.params.site]
   if (oauth) {
     ctx.redirect(oauth.authUrl)
   } else {
-    throw new Error('no such platform')
+    throw new Error('no such site')
   }
 })
 
-router.get('/oauth2-callback/:platform', async (ctx) => {
+router.get('/oauth2-callback/:site', async (ctx) => {
 // http://localhost:3000/oauth2-callback/github?code=c0201ef0bce39b98ef3b&state=1234
   var code = ctx.query.code
   var state = ctx.query.state
-  var platform = ctx.params.platform
-  var oauth = oauthMap[platform]
-  if (!oauth || state !== config.oauth2[platform].state) {
+  var site = ctx.params.site
+  var oauth = oauthMap[site]
+  if (!oauth || state !== config.oauth2[site].state) {
     ctx.body = 'Invalid'
     return
   }
@@ -55,12 +55,10 @@ router.get('/oauth2-callback/:platform', async (ctx) => {
   console.log('token:', token)
   // Get profile
   console.log('geting profile', oauthService)
-  let result = await oauthService.getProfile(platform, token)
-  let profile = result[0]
-  console.log(result, profile)
+  let user = await oauthService.getOrCreateUser(site, token)
 
-  ctx.body = profile
-  // let sid = snslogin(platform, profile)
+  ctx.body = user
+  // let sid = snslogin(site, profile)
   // ctx.cookies.set('sid', sid)
   // ctx.redirect('/')
 })

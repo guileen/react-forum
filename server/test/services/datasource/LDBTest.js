@@ -10,13 +10,15 @@ describe('LDB', () => {
     let value = await db.get('foo')
     expect(value).to.be.equal('bar')
     await db.del('foo')
-    try {
-      let value2 = await db.get('foo')
-      expect(value2).to.be(null)
-    } catch (e) {
-      console.log(e, e.notFound)
-      expect(e.notFound).to.be.ok
-    }
+    let value2 = await db.get('foo')
+    expect(value2).to.be.null
+  })
+
+  it('should incr', async () => {
+    let v = await db.incr('incr_test')
+    expect(v).to.be.eql(1)
+    v = await db.incr('incr_test')
+    expect(v).to.be.eql(2)
   })
 
   it('should mget', async () => {
