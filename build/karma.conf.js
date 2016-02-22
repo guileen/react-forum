@@ -1,8 +1,9 @@
 import { argv } from 'yargs'
 import config from '../config'
 import webpackConfig from './webpack.config'
+import _debug from 'debug'
 
-const debug = require('debug')('app:karma')
+const debug = _debug('app:karma')
 debug('Create configuration.')
 
 const karmaConfig = {
@@ -18,13 +19,13 @@ const karmaConfig = {
   ],
   singleRun: !argv.watch,
   frameworks: ['mocha'],
+  reporters: ['mocha'],
   preprocessors: {
-    [`${config.dir_test}/test-bundler.js`]: ['webpack', 'sourcemap']
+    [`${config.dir_test}/test-bundler.js`]: ['webpack']
   },
-  reporters: ['spec'],
   browsers: ['PhantomJS'],
   webpack: {
-    devtool: 'inline-source-map',
+    devtool: 'cheap-module-source-map',
     resolve: {
       ...webpackConfig.resolve,
       alias: {
@@ -39,7 +40,7 @@ const karmaConfig = {
       ],
       loaders: webpackConfig.module.loaders.concat([
         {
-          test: /sinon\/pkg\/sinon\.js/,
+          test: /sinon(\\|\/)pkg(\\|\/)sinon\.js/,
           loader: 'imports?define=>false,require=>false'
         }
       ])
@@ -72,4 +73,5 @@ if (config.coverage_enabled) {
   }]
 }
 
-export default (cfg) => cfg.set(karmaConfig)
+// cannot use `export default` because of Karma.
+module.exports = (cfg) => cfg.set(karmaConfig)
