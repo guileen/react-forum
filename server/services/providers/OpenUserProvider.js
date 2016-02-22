@@ -1,4 +1,4 @@
-import trace from '../../commons/decorators/trace'
+import {trace} from '../../commons/decorators'
 import {EntityProvider} from './provider'
 
 const OPENID_TO_UID = 'oid_to_uid:'

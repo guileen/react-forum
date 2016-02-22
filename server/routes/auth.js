@@ -4,7 +4,8 @@ import oauth2 from 'simple-oauth2'
 import qs from 'querystring'
 import router from './router'
 import Promise from 'bluebird'
-import * as oauthService from '../services/oauthService'
+import {userProvider, sessionProvider} from '../services/providers'
+import {getOrCreateUser} from '../services/oauthService'
 
 function initOauthMap(confMap, baseUrl) {
   var oauthMap = {}
@@ -54,13 +55,19 @@ router.get('/oauth2-callback/:site', async (ctx) => {
   }
   console.log('token:', token)
   // Get profile
-  console.log('geting profile', oauthService)
-  let user = await oauthService.getOrCreateUser(site, token)
+  let user = await getOrCreateUser(site, token)
+  if (!user) {
+    throw new Error('not create user')
+  }
+  const sid = await sessionProvider.bindUser(user.id)
+  ctx.cookies.set('sid', sid)
+  ctx.redirect('/')
+})
 
-  ctx.body = user
-  // let sid = snslogin(site, profile)
-  // ctx.cookies.set('sid', sid)
-  // ctx.redirect('/')
+router.get('/profile', async (ctx) => {
+  if (ctx.state.userId) {
+    ctx.body = await userProvider.get(ctx.state.userId)
+  }
 })
 
 router.get('/test', (ctx) => {

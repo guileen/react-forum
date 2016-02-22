@@ -1,4 +1,4 @@
-import trace from '../../commons/decorators/trace'
+import {trace} from '../../commons/decorators'
 
 export default class Provider {
   /**
