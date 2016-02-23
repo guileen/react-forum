@@ -1,5 +1,4 @@
 import config from '../config'
-import crypto from 'crypto'
 import oauth2 from 'simple-oauth2'
 import qs from 'querystring'
 import router from './router'
@@ -61,6 +60,13 @@ router.get('/oauth2-callback/:site', async (ctx) => {
   }
   const sid = await sessionProvider.bindUser(user.id)
   ctx.cookies.set('sid', sid)
+  ctx.redirect('/')
+})
+
+router.get('/auth/logout', async (ctx) => {
+  const sid = ctx.cookies.get('sid')
+  await sessionProvider.del(sid)
+  ctx.cookies.set('sid', null)
   ctx.redirect('/')
 })
 

@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { increment, doubleAsync } from '../../redux/modules/counter'
 import DuckImage from './Duck.jpg'
 import classes from './HomeView.scss'
+import UserAvatar from '../../components/UserAvatar'
 
 // We can use Flow (http://flowtype.org/) to type our component's props
 // and state. For convenience we've included both regular propTypes and
@@ -23,12 +24,28 @@ type Props = {
 // See: http://rackt.github.io/redux/docs/recipes/WritingTests.html
 export class HomeView extends React.Component<void, Props, void> {
   static propTypes = {
+    loginUser: PropTypes.object,
     counter: PropTypes.number.isRequired,
     doubleAsync: PropTypes.func.isRequired,
     increment: PropTypes.func.isRequired
   };
 
   render () {
+    let accountBtn
+    if (this.props.loginUser && this.props.loginUser.success) {
+      accountBtn = (
+        <button className='btn btn-default'>
+          <a href='/v1/auth/logout'>Logout</a>
+        </button>
+      )
+    } else {
+      accountBtn = (
+        <button className='btn btn-default'>
+          <a href='/v1/auth/oauth2/github'>Github Login</a>
+        </button>
+      )
+    }
+
     return (
       <div className='container text-center'>
         <div className='row'>
@@ -39,6 +56,7 @@ export class HomeView extends React.Component<void, Props, void> {
           </div>
         </div>
         <h1>Welcome to the React Redux Starter Kit</h1>
+        <UserAvatar/>
         <h2>
           Sample Counter:
           {' '}
@@ -52,15 +70,14 @@ export class HomeView extends React.Component<void, Props, void> {
           Double (Async)
         </button>
         {' '}
-        <button className='btn btn-default'>
-          <a href='/v1/auth/oauth2/github'>Github Login</a>
-        </button>
+        {accountBtn}
       </div>
     )
   }
 }
 
 const mapStateToProps = (state) => ({
+  loginUser: state.user.loginUser,
   counter: state.counter
 })
 export default connect((mapStateToProps), {
