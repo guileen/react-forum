@@ -43,11 +43,21 @@ export default class LDB {
   }
 
   @trace
+  rangeKeys(opts) {
+    return this.range({...opts, keys: true, values: false})
+  }
+
+  @trace
+  rangeValues(opts) {
+    return this.range({...opts, keys: false, values: true})
+  }
+
+  @trace
   range(opts) {
-    const self = this
+    const db = this.db
     return new Promise(function(resolve, reject) {
       const results = []
-      const stream = self.createReadStream(opts)
+      const stream = db.createReadStream(opts)
       stream.on('data', (data) => {
         results.push(data)
       })
@@ -55,33 +65,9 @@ export default class LDB {
         reject(err)
       })
       stream.on('end', () => {
+        console.log(results)
         resolve(results)
       })
     })
   }
-}
-
-export function makePromiseLDB(dbOpts) {
-  const db = new LevelUp(dbOpts)
-  ;['get', 'put', 'del', 'open', 'close', 'batch', 'approximateSize'].forEach((method) => {
-    db[method + 'Async'] = Promise.promisify(LevelUp.prototype[method], db)
-  })
-
-  db.range = (opts) => {
-    const self = this
-    return new Promise(function(resolve, reject) {
-      const results = []
-      const stream = self.createReadStream(opts)
-      stream.on('data', (data) => {
-        results.push(data)
-      })
-      stream.on('error', (err) => {
-        reject(err)
-      })
-      stream.on('end', () => {
-        resolve(results)
-      })
-    })
-  }
-  return db
 }

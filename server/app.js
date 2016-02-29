@@ -3,6 +3,7 @@ import Koa from 'koa'
 import authorize from './middleware/authorize'
 import routes from './routes'
 import cclog from 'cclog'
+import bodyparser from 'koa-bodyparser'
 
 const app = new Koa()
 
@@ -25,9 +26,9 @@ if (!isDev) {
   app.use(conditional())
   app.use(etag())
 }
-
-app.use(bodyParser())
 */
+
+app.use(bodyparser())
 app.use(authorize())
 app.use(routes.routes())
 app.use(routes.allowedMethods())

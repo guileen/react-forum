@@ -28,6 +28,7 @@
     "flow-vars/define-flow-type": 1,
     "flow-vars/use-flow-type": 1,
     "arrow-parens": [0, "as-needed"],
+    "react/jsx-boolean-value": 0,
     "react/jsx-closing-bracket-location": 0
   }
 }

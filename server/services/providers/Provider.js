@@ -15,30 +15,36 @@ export default class Provider {
       throw new Error('model:' + modelName + ' valueType:' + valueType + ' is not in object, string, number, buffer')
     }
     this.valueType = valueType
+    this.convertValue = this.convertValue.bind(this)
   }
 
   key(id) {
-    return this.modelName + ':' + id
+    var ids = '' + id
+    var zeros = ids.length < 20 ? '0'.repeat(20 - ids.length) : ''
+    return this.modelName + ':' + zeros + ids
+  }
+
+  convertValue(value) {
+    if (value == null) {
+      return this.valueType === 'number' ? 0 : value
+    }
+    switch (this.valueType) {
+      case 'object':
+        return JSON.parse(value)
+      case 'number':
+        return Number(value)
+      case 'string':
+        return value
+      case 'buffer':
+        return new Buffer(value)
+    }
   }
 
   @trace
   async get(id) {
     console.log('get', this.modelName, id)
     let v = await this.db.get(this.key(id))
-    if (v == null) {
-      return this.valueType === 'number' ? 0 : v
-    }
-    switch (this.valueType) {
-      case 'object':
-        return JSON.parse(v)
-      case 'number':
-        return Number(v)
-      case 'string':
-        return v
-      case 'buffer':
-        return new Buffer(v)
-    }
-    return v
+    return this.convertValue(v)
   }
 
   @trace
@@ -70,8 +76,20 @@ export default class Provider {
     return this.db.del(this.key(id))
   }
 
+  /**
+   * lt, gt, lte, gte
+   */
   @trace
-  range() {
+  async rangeValues(opt) {
+    let finalOpt = {
+      ...opt,
+      lt: opt.lt && this.key(opt.lt),
+      lte: opt.lte && this.key(opt.lte),
+      gt: opt.gt && this.key(opt.gt),
+      gte: opt.gte && this.key(opt.gte)
+    }
+    var result = await this.db.rangeValues(finalOpt)
+    return result.map(this.convertValue)
   }
 }
 
@@ -93,7 +111,7 @@ export class EntityProvider extends Provider {
   @trace
   async insert(obj) {
     if (obj.id) throw new Error('inserting object has id')
-    var id = await this.db.incr(this.key(id))
+    var id = await this.generateId()
     obj.id = id
     await this.put(id, obj)
     return id

@@ -1,7 +1,7 @@
-import fetchJson from './fetchJson'
+import fetchData from './fetchData'
+
+export const show = () => fetchData('/v1/user')
 
 export default {
-  show: () => {
-    return fetchJson('/v1/user')
-  }
+  show
 }
