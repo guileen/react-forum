@@ -49,6 +49,8 @@ class PostList extends Component {
               size={40}
               left={0}
               top={0}
+              percentage={80}
+              color='red'
               status='ready'
               style={{
                 display: 'inline-block',
