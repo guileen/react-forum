@@ -1,14 +1,18 @@
-import userApi from '../../apis/user'
 import {createAction, handleActions} from 'redux-actions'
+import {createFetchAction} from '../middlewares/redux-promise-action'
+
 // Constants
 export const LOAD_LOGIN_USER = 'LOAD_LOGIN_USER'
+export const SET_LOGIN_USER = 'SET_LOGIN_USER'
 
 export const actions = {
-  loadLoginUser: createAction(LOAD_LOGIN_USER, userApi.show)
+  // loadLoginUser: createPromiseAction(SET_LOGIN_USER, userApi.show)
+  loadLoginUser: createFetchAction(SET_LOGIN_USER, '/v1/user'),
+  setLoginUser: createAction(SET_LOGIN_USER)
 }
 
 export const reducers = handleActions({
-  [LOAD_LOGIN_USER]: (state = {loginUser: null}, action) => ({
+  [SET_LOGIN_USER]: (state = {loginUser: null}, action) => ({
     ...state,
     loginUser: action.payload
   })

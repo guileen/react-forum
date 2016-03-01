@@ -7,9 +7,14 @@ export const getLatest = (cursor=0, limit=30) => {
     lte: '99999999999999999999',
     reverse: true,
     limit: limit
-  })).then((posts) => {
-    return posts
+  })).then(posts => {
+    return Promise.all(posts.map(getFullPost))
   })
 }
 
-export default Object.assign({}, postProvider, {getLatest})
+export const getFullPost = async (post) => {
+  post.user = await userProvider.get(post.userId)
+  return post
+}
+
+export default Object.assign({}, postProvider, {getLatest, getFullPost})

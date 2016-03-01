@@ -10,7 +10,7 @@ export class MainView extends React.Component {
 
   render() {
     return (
-      <div className='container'>
+      <div className='row'>
         <SimpleEditor/>
         <PostList src='/v1/post/'/>
       </div>

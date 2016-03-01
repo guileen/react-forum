@@ -17,7 +17,13 @@ function CoreLayout ({ children }) {
     <div className='page-container'>
       <HeaderBar/>
       <div className='view-container'>
-        {children}
+        <div className='container'>
+          <div className='row'>
+            <div className='col-md-8 col-md-offset-2'>
+              {children}
+            </div>
+          </div>
+        </div>
       </div>
       <FooterBar/>
     </div>

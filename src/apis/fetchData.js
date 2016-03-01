@@ -8,19 +8,8 @@ export default function fetchData(url, opt={}) {
   }).then(res => {
     const contentType = res.headers.get('Content-Type')
     const isJson = contentType.indexOf('json') >= 0
-    if (isJson) {
-      return res.json().then(json => ({
-        status: res.status,
-        success: res.status >= 200 && res.status <300,
-        data: json
-      }))
-    } else {
-      return res.text().then(text => ({
-        status: res.status,
-        success: res.status >= 200 && res.status < 300,
-        data: text
-      }))
-    }
+    const dataPromise = isJson ? res.json() : res.text()
+    return res.status >= 400 ? dataPromise.then(data => Promise.reject({status: res.status, data: data})) : dataPromise
   })
 }
 

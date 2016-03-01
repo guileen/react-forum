@@ -1,8 +1,7 @@
 import React, {Component, PropTypes} from 'react'
 import Card from 'material-ui/lib/card/card'
 import CardText from 'material-ui/lib/card/card-text'
-import CardMedia from 'material-ui/lib/card/card-media'
-import CardTitle from 'material-ui/lib/card/card-title'
+import CardHeader from 'material-ui/lib/card/card-header'
 
 class PostCard extends Component {
 
@@ -13,15 +12,15 @@ class PostCard extends Component {
   render() {
     const {post} = this.props
     return (
-      <Card>
-        <CardTitle>
-          {post.userId}
-        </CardTitle>
+      <Card style={{marginTop: 20}}>
+        <CardHeader
+          title={post.user.name}
+          subtitle='xxxxx'
+          avatar={post.user.avatarUrl}
+        />
         <CardText>
           {post.text}
         </CardText>
-        <CardMedia>
-        </CardMedia>
       </Card>
     )
   }

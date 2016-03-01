@@ -11,12 +11,10 @@ router.post('/post', requireLogin, async (ctx) => {
   }
   var id = await postProvider.insert(post)
   post.id = id
+  await postService.getFullPost(post)
   ctx.body = post
 })
 
 router.get('/post', async (ctx) => {
-  await new Promise((resolve, reject) => {
-    setTimeout(resolve, 1000)
-  })
   ctx.body = await postService.getLatest()
 })

@@ -15,7 +15,8 @@ class HeaderBar extends React.Component {
 
   render() {
     let rightNav
-    if (this.props.loginUser && this.props.loginUser.success) {
+    const {loginUser} = this.props
+    if (loginUser && loginUser.fulfilled) {
       rightNav = (
         <ul className='nav navbar-nav navbar-right'>
           {/*
@@ -24,8 +25,8 @@ class HeaderBar extends React.Component {
           */}
           <li>
             <a href='#contact'>
-              {this.props.loginUser.data.name}
-              <img src={this.props.loginUser.data.avatarUrl} width='25' height='25'/>
+              {loginUser.value.name}
+              <img src={loginUser.value.avatarUrl} width='25' height='25'/>
               {/* <a href='/v1/auth/logout'>Logout</a> */}
             </a>
           </li>
@@ -44,27 +45,33 @@ class HeaderBar extends React.Component {
     return (
       <nav className='navbar navbar-inverse navbar-fixed-top'>
         <div className='container'>
-          <div className='navbar-header'>
-            <button
-              type='button'
-              className='navbar-toggle collapsed'
-              data-toggle='collapse'
-              data-target='#navbar'
-              aria-expanded='false'
-              aria-controls='navbar'
-            >
-              <span className='sr-only'>Toggle navigation</span>
-              <span className='icon-bar'></span>
-              <span className='icon-bar'></span>
-              <span className='icon-bar'></span>
-            </button>
-            <a className='navbar-brand' href='#'>Project name</a>
-          </div>
-          <div id='navbar' className='collapse navbar-collapse'>
-            {rightNav}
-            <form className='navbar-form'>
-              <input type='text' className='form-control' placeholder='Search...'/>
-            </form>
+          <div className='row'>
+            <div className='col-md-8 col-md-offset-2'>
+
+              <div className='navbar-header'>
+                <button
+                  type='button'
+                  className='navbar-toggle collapsed'
+                  data-toggle='collapse'
+                  data-target='#navbar'
+                  aria-expanded='false'
+                  aria-controls='navbar'
+                >
+                  <span className='sr-only'>Toggle navigation</span>
+                  <span className='icon-bar'></span>
+                  <span className='icon-bar'></span>
+                  <span className='icon-bar'></span>
+                </button>
+                <a className='navbar-brand' href='#'>Project name</a>
+              </div>
+              <div id='navbar' className='collapse navbar-collapse'>
+                {rightNav}
+                <form className='navbar-form'>
+                  <input type='text' className='form-control' placeholder='Search...'/>
+                </form>
+              </div>
+
+            </div>
           </div>
         </div>
       </nav>

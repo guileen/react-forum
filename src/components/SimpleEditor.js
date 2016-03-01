@@ -9,21 +9,32 @@ import TextField from 'material-ui/lib/text-field'
 
 class SimpleEditor extends React.Component {
   static propTypes = {
+    editor: PropTypes.object,
     newPost: PropTypes.object,
+    setEditorText: PropTypes.func.isRequired,
     requestAddNewPost: PropTypes.func.isRequired
   };
 
   constructor(props) {
     super(props)
-    this.sendNewPost = this.sendNewPost.bind(this)
+    this.onPostTap = this.onPostTap.bind(this)
+    this.onChange = this.onChange.bind(this)
   }
 
-  sendNewPost() {
-    console.log(this.refs.textField.getValue())
+  onChange() {
+    this.props.setEditorText(this.refs.textField.getValue())
+  }
+
+  onPostTap() {
     this.props.requestAddNewPost({text: this.refs.textField.getValue()})
   }
 
+  getValue() {
+    return this.props.editor.text
+  }
+
   render() {
+    const {editor, newPost} = this.props
     return (
       <Card style={{padding: '0 10px'}}>
         <CardMedia>
@@ -34,15 +45,17 @@ class SimpleEditor extends React.Component {
             multiLine={true}
             rows={1}
             rowsMax={10}
-            disabled={this.props.newPost.pending}
+            value={editor.text}
+            onChange={this.onChange}
+            disabled={newPost.pending}
             />
         </CardMedia>
         <CardActions style={{textAlign: 'right'}}>
           <RaisedButton
             label='Post'
             secondary={true}
-            onTouchTap={this.sendNewPost}
-            disabled={this.props.newPost.pending}
+            onTouchTap={this.onPostTap}
+            disabled={newPost.pending}
           />
         </CardActions>
       </Card>
@@ -52,5 +65,6 @@ class SimpleEditor extends React.Component {
 }
 
 export default connect(state => ({
-  newPost: state.post.newPost
+  newPost: state.post.newPost,
+  editor: state.post.editor
 }), actions)(SimpleEditor)
