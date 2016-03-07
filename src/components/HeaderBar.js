@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { actions as headerActions } from '../redux/modules/header'
 import { actions as userActions } from '../redux/modules/user'
+import { Link } from 'react-router'
 
 class HeaderBar extends React.Component {
   static propTypes = {
@@ -46,7 +47,7 @@ class HeaderBar extends React.Component {
       <nav className='navbar navbar-inverse navbar-fixed-top'>
         <div className='container'>
           <div className='row'>
-            <div className='col-md-8 col-md-offset-2'>
+            <div className='col-md-12'>
 
               <div className='navbar-header'>
                 <button
@@ -62,7 +63,7 @@ class HeaderBar extends React.Component {
                   <span className='icon-bar'></span>
                   <span className='icon-bar'></span>
                 </button>
-                <a className='navbar-brand' href='#'>Project name</a>
+                <Link className='navbar-brand' to='/'>React Forum</Link>
               </div>
               <div id='navbar' className='collapse navbar-collapse'>
                 {rightNav}

@@ -40,6 +40,10 @@ export const createFetchAction = (stateAction, url, opt={}, onFulfilled, onRejec
     if (typeof url === 'function') {
       finalOpt = url(...args)
       finalUrl = finalOpt.url
+      if (typeof finalOpt === 'string') {
+        finalUrl = finalOpt
+        finalOpt = opt
+      }
     } else {
       finalUrl = url
       finalOpt = opt

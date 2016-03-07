@@ -1,7 +1,11 @@
 import React, {Component, PropTypes} from 'react'
+import {Link} from 'react-router'
 import Card from 'material-ui/lib/card/card'
 import CardText from 'material-ui/lib/card/card-text'
 import CardHeader from 'material-ui/lib/card/card-header'
+import CardAction from 'material-ui/lib/card/card-actions'
+
+import FlatButton from 'material-ui/lib/flat-button'
 
 class PostCard extends Component {
 
@@ -21,6 +25,14 @@ class PostCard extends Component {
         <CardText>
           {post.text}
         </CardText>
+        <CardAction>
+          <FlatButton label='+1' />
+          <Link to={`/post/${post.id}`}>
+            <FlatButton
+              label='comment'
+              />
+          </Link>
+        </CardAction>
       </Card>
     )
   }
