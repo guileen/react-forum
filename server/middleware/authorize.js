@@ -11,7 +11,6 @@ export default () => {
     console.log('sid', sid)
     if (sid) {
       ctx.state.userId = await sessionProvider.get(sid)
-      console.log('state', ctx.state)
     }
     await next()
   }

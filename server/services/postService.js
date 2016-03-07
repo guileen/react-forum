@@ -8,13 +8,16 @@ export const getLatest = (cursor=0, limit=30) => {
     reverse: true,
     limit: limit
   })).then(posts => {
-    return Promise.all(posts.map(getFullPost))
+    return Promise.all(posts.map(loadPostCard))
   })
 }
 
-export const getFullPost = async (post) => {
+export const loadPostCard = async (post) => {
   post.user = await userProvider.get(post.userId)
   return post
 }
 
-export default Object.assign({}, postProvider, {getLatest, getFullPost})
+export default Object.assign({}, postProvider, {
+  getLatest,
+  loadPostCard
+})
