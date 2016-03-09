@@ -26,7 +26,7 @@ class PostCard extends Component {
           {post.text}
         </CardText>
         <CardAction>
-          <FlatButton label='+1' />
+          {/* <FlatButton label='+1' /> */}
           <Link to={`/post/${post.id}`}>
             <FlatButton
               label='comment'
