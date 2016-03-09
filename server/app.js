@@ -1,12 +1,14 @@
 global.config = require('./config')
 import Koa from 'koa'
 import authorize from './middleware/authorize'
+import logger from './middleware/logger'
 import routes from './routes'
 import cclog from 'cclog'
 import bodyparser from 'koa-bodyparser'
 
 const app = new Koa()
 
+app.use(logger())
 app.use(async (ctx, next) => {
   try {
     await next()
@@ -18,10 +20,6 @@ app.use(async (ctx, next) => {
 })
 
 /*
-if (!isTest) {
-  app.use(middlewares.logger())
-}
-
 if (!isDev) {
   app.use(conditional())
   app.use(etag())
