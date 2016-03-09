@@ -6,6 +6,7 @@ import config from '../config'
 
 const debug = _debug('app:bin:compile')
 const paths = config.utils_paths
+const staticHost = config.static_host || ''
 
 ;(async function () {
   try {
@@ -17,6 +18,9 @@ const paths = config.utils_paths
     }
     debug('Copy static assets to dist folder.')
     fs.copySync(paths.client('static'), paths.dist())
+    const originIndexHtml = fs.readFileSync(paths.dist() + '/index.html', 'utf-8')
+    const indexHtml = originIndexHtml.replace(/(src|href)="([a-zA-Z0-9.]*)"/g, `$1="${staticHost}\/$2"`)
+    fs.writeFileSync(paths.dist() + '/index.html', indexHtml)
   } catch (e) {
     debug('Compiler encountered an error.', e)
     process.exit(1)
