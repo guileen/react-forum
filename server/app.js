@@ -9,13 +9,16 @@ import bodyparser from 'koa-bodyparser'
 const app = new Koa()
 
 app.use(logger())
+
 app.use(async (ctx, next) => {
   try {
     await next()
   } catch (err) {
     cclog.error(err)
-    ctx.body = err.message || err
-    ctx.status = err.status || 500
+    if (!ctx.body) {
+      ctx.body = err.message || err
+      ctx.status = err.status || 500
+    }
   }
 })
 
