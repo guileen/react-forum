@@ -2,6 +2,11 @@ import {sessionProvider} from '../services/providers'
 
 export default () => {
   return async (ctx, next) => {
+    ctx.state.privacy = {
+      ip: ctx.ips.join(',') || ctx.ip,
+      ua: ctx.headers['user-agent'],
+      lang: ctx.headers['accept-language']
+    }
     var sid
     if (ctx.headers.cookie) {
       sid = ctx.cookies.get('sid')
