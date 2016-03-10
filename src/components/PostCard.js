@@ -17,6 +17,7 @@ import FlatButton from 'material-ui/lib/flat-button'
 class PostCard extends Component {
 
   static propTypes = {
+    loginUser: PropTypes.object,
     requestDeletePost: PropTypes.func.isRequired,
     post: PropTypes.object.isRequired
   };
@@ -31,7 +32,9 @@ class PostCard extends Component {
   }
 
   render() {
-    const {post} = this.props
+    const {post, loginUser} = this.props
+    console.log('post', post)
+    console.log('loginUser', loginUser)
     const menu = (
       <IconMenu
         style={{float: 'right'}}
@@ -40,7 +43,9 @@ class PostCard extends Component {
         targetOrigin={{horizontal: 'right', vertical: 'top'}}
       >
         <MenuItem primaryText='Get links' leftIcon={<ContentLink />} />
-        <MenuItem primaryText='Delete' leftIcon={<Delete />} onTouchTap={this.onDelete}/>
+        {loginUser && Number(post.userId) === loginUser.id
+          ? <MenuItem primaryText='Delete' leftIcon={<Delete />} onTouchTap={this.onDelete}/>
+          : ''}
       </IconMenu>
     )
 
@@ -68,4 +73,6 @@ class PostCard extends Component {
   }
 }
 
-export default connect(state => ({}), actionCreators)(PostCard)
+export default connect(state => ({
+  loginUser: state.user.loginUser && state.user.loginUser.value
+}), actionCreators)(PostCard)

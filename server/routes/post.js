@@ -15,9 +15,13 @@ router.post('/post', requireLogin, async (ctx) => {
   ctx.body = post
 })
 
-router.post('/post/delete', async (ctx) => {
+router.post('/post/delete', requireLogin, async (ctx) => {
   var id = ctx.request.body.id
   var post = await postProvider.get(id)
+  if (Number(post.userId) !== ctx.state.userId) {
+    ctx.throw(401)
+    return
+  }
   await postProvider.del(id)
   ctx.body = post
 })

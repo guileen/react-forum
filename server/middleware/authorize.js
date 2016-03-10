@@ -10,7 +10,8 @@ export default () => {
     }
     console.log('sid', sid)
     if (sid) {
-      ctx.state.userId = await sessionProvider.get(sid)
+      const userId = await sessionProvider.get(sid)
+      ctx.state.userId = Number(userId)
     }
     await next()
   }
