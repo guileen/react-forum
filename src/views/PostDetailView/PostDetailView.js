@@ -1,6 +1,7 @@
 import React, {PropTypes, Component} from 'react'
 import { connect } from 'react-redux'
-import { actions } from '../../redux/modules/post'
+import { actionCreators } from '../../redux/modules/post'
+import { actionCreators as commentActionCreators } from '../../redux/modules/comment'
 import { Link } from 'react-router'
 import CommentCard from 'components/CommentCard'
 import CommentEditor from 'components/CommentEditor'
@@ -96,9 +97,6 @@ export class PostDetailView extends Component {
 }
 
 export default connect(state => ({
-  postFetch: state.post.postFetch,
-  post: state.post.post,
-  commentsFetch: state.post.commentsFetch,
-  comments: state.post.comments,
-  commentEditorText: state.post.commentEditorText
-}), actions)(PostDetailView)
+  ...state.post,
+  ...state.comment
+}), Object.assign({}, actionCreators, commentActionCreators))(PostDetailView)

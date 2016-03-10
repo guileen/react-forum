@@ -6,14 +6,11 @@ import {createPromiseAction, createFetchAction} from '../middlewares/redux-promi
 const SET_NEW_POST_FETCH = 'SET_NEW_POST_FETCH'
 const SET_POST_LIST_FETCH = 'SET_POST_LIST_FETCH'
 const SET_POST_FETCH = 'SET_POST_FETCH'
-const SET_COMMENTS_FETCH = 'SET_COMMENTS_FETCH'
+const SET_DELETE_FETCH = 'SET_DELETE_FETCH'
 
 const SET_EDITOR_TEXT = 'SET_EDITOR_TEXT'
 const ADD_POST = 'ADD_POST'
-
-const SET_ADD_COMMENT_FETCH = 'SET_ADD_COMMENT_FETCH'
-const SET_COMMENT_EDITOR_TEXT = 'SET_COMMENT_EDITOR_TEXT'
-const ADD_COMMENT = 'ADD_COMMENT'
+const DELETE_POST = 'DELETE_POST'
 
 // ----- actions --------
 // it will auto dispatch(SET_NEW_POST_FETCH, result)
@@ -27,30 +24,27 @@ const requestAddNewPost = createPromiseAction(
     }
   })
 
+const requestDeletePost = createPromiseAction(
+  SET_DELETE_FETCH,
+  postApi.deletePost,
+  (dispatch, payload) => {
+    if (payload.fulfilled) {
+      dispatch(deletePost(payload.value.id))
+    }
+  })
+
 const fetchPosts = createFetchAction(SET_POST_LIST_FETCH, '/v1/post')
 const fetchPost = createFetchAction(SET_POST_FETCH, (postId) => `/v1/post/${postId}`)
-const fetchPostComments = createFetchAction(SET_COMMENTS_FETCH, (postId) => `/v1/post/${postId}/comments`)
-
 const addNewPost = createAction(ADD_POST)
+const deletePost = createAction(DELETE_POST)
 const setNewPost = createAction(SET_NEW_POST_FETCH)
 const setEditorText = createAction(SET_EDITOR_TEXT)
 
-const requestAddComment = createPromiseAction(SET_ADD_COMMENT_FETCH, postApi.addComment, (dispatch, payload) => {
-  if (payload.fulfilled) {
-    dispatch(addComment(payload.value))
-    dispatch(setCommentEditorText(''))
-  }
-})
-const addComment = createAction(ADD_COMMENT)
-const setCommentEditorText = createAction(SET_COMMENT_EDITOR_TEXT)
-
-export const actions = {
+export const actionCreators = {
   requestAddNewPost,
+  requestDeletePost,
   fetchPosts,
   fetchPost,
-  requestAddComment,
-  fetchPostComments,
-  setCommentEditorText,
   setEditorText,
   addNewPost,
   setNewPost
@@ -62,12 +56,8 @@ const initialState = {
   newPost: {},
   postsFetch: null,
   postFetch: null,
-  addCommentFetch: null,
-  commentsFetch: null,
-  commentEditorText: '',
   posts: [],
-  post: null,
-  comments: []
+  post: null
 }
 
 export default handleActions({
@@ -87,6 +77,10 @@ export default handleActions({
     ...state,
     posts: [action.payload, ...state.posts]
   }),
+  [DELETE_POST]: (state = {posts: []}, action) => ({
+    ...state,
+    posts: state.posts.filter((post) => post.id !== action.payload)
+  }),
   [SET_NEW_POST_FETCH]: (state, action) => ({
     ...state,
     newPost: action.payload
@@ -95,22 +89,5 @@ export default handleActions({
     ...state,
     postFetch: action.payload,
     post: action.payload.fulfilled ? action.payload.value : state.post
-  }),
-  [SET_ADD_COMMENT_FETCH]: (state, action) => ({
-    ...state,
-    addCommentFetch: action.payload
-  }),
-  [SET_COMMENT_EDITOR_TEXT]: (state, action) => ({
-    ...state,
-    commentEditorText: action.payload
-  }),
-  [ADD_COMMENT]: (state = {comments: []}, action) => ({
-    ...state,
-    comments: [action.payload, ...state.comments]
-  }),
-  [SET_COMMENTS_FETCH]: (state, action) => ({
-    ...state,
-    commentsFetch: action.payload,
-    comments: action.payload.fulfilled ? action.payload.value : state.comments
   })
 }, initialState)

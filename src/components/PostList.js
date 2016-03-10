@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react'
 import { connect } from 'react-redux'
-import { actions } from '../redux/modules/post'
+import { actionCreators } from '../redux/modules/post'
 import Card from 'material-ui/lib/card/card'
 import CardText from 'material-ui/lib/card/card-text'
 import PostCard from './PostCard'
@@ -10,6 +10,8 @@ class PostList extends Component {
 
   static propTypes = {
     src: PropTypes.string.isRequired,
+    requestDeletePost: PropTypes.func.isRequired,
+    deletePostFetch: PropTypes.object,
     postsFetch: PropTypes.object,
     posts: PropTypes.array,
     fetchPosts: PropTypes.func.isRequired
@@ -39,7 +41,12 @@ class PostList extends Component {
         </Card>
       )
     } else if (postsFetch.fulfilled) {
-      const postCards = posts.map(post => <PostCard post={post}/>)
+      const postCards = posts.map(post => (
+        <PostCard
+          key={post.id}
+          post={post}
+          deletePost={this.props.requestDeletePost}
+        />))
       return <div>{postCards}</div>
     } else {
       return (
@@ -67,4 +74,4 @@ class PostList extends Component {
 export default connect(state => ({
   postsFetch: state.post.postsFetch,
   posts: state.post.posts
-}), actions)(PostList)
+}), actionCreators)(PostList)

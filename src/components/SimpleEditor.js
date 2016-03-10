@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react'
 import { connect } from 'react-redux'
-import { actions } from '../redux/modules/post'
+import { actionCreators } from '../redux/modules/post'
 import Card from 'material-ui/lib/card/card'
 import CardActions from 'material-ui/lib/card/card-actions'
 import CardMedia from 'material-ui/lib/card/card-media'
@@ -67,4 +67,4 @@ class SimpleEditor extends React.Component {
 export default connect(state => ({
   newPost: state.post.newPost,
   editor: state.post.editor
-}), actions)(SimpleEditor)
+}), actionCreators)(SimpleEditor)
