@@ -11,7 +11,7 @@ export function getProfile(site, access_token) {
   return Promise.reject(new Error('no support site:'+site))
 }
 
-export async function getOrCreateUser(site, access_token) {
+export async function getOrCreateUser(site, access_token, props) {
   var profile = await getProfile(site, access_token)
-  return await openUserProvider.getOrCreateUser(site, profile)
+  return await openUserProvider.getOrCreateUser(site, profile, props)
 }

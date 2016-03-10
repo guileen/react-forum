@@ -10,13 +10,13 @@ export default class OpenUserProvider extends EntityProvider {
   }
 
   @trace
-  async getOrCreateUser(site, profile) {
+  async getOrCreateUser(site, profile, props) {
     const openId = OpenUserProvider.getOpenId(site, profile)
     var userId = await this.getUserIdByOpenId(openId)
     var user = userId && await this.userProvider.get(userId)
     if (!user) {
       // generate user
-      user = OpenUserProvider.makeUserInfo(site, profile)
+      user = OpenUserProvider.makeUserInfo(site, profile, props)
       userId = await this.userProvider.insert(user)
       await this.bindOpenIdToUserId(openId, userId)
       await this.put(openId, {
@@ -47,16 +47,16 @@ export default class OpenUserProvider extends EntityProvider {
     return site + ':' + profile.id
   }
 
-  static makeUserInfo(site, profile) {
+  static makeUserInfo(site, profile, props={}) {
     profile.site = site
     switch (site) {
       case 'github':
-        return {
+        return Object.assign({
           name: profile.name,
           avatarUrl: profile.avatar_url,
           type: 'site',
           site: site
-        }
+        }, props)
       default:
         throw new Error('unsupport site:' + site)
     }

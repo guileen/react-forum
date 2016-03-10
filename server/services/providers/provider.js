@@ -94,6 +94,43 @@ export default class Provider {
     var result = await this.db.rangeValues(finalOpt)
     return result.map(this.convertValue)
   }
+
+  async bindOneToOne(toOnePrefix, targetId, oneId) {
+    await this.db.put(toOnePrefix + targetId, oneId)
+  }
+
+  /**
+   * author_user post
+   *
+   */
+  async bindAnyToMany(anyToManyPrefix, anyId, selfId) {
+    var seq = await this.db.incr('id:' + toManyPrefix + anyId)
+    await this.db.put(toManyPrefix + anyId + ':' + this.fixNumStr(seq), selfId)
+  }
+
+  /**
+   * voter_user  post
+   *
+   */
+  async bindManyToMany (aToBPrefix, bToAPrefix, aid, bid) {
+    await this.bindAnyToMany(aToBPrefix, aid, bid)
+    await this.bindAnyToMany(bToAPrefix, bid, aid)
+  }
+
+  async rangeAnyToMany (anyToManyPrefix, anyId, opts) {
+    const prefix = anyToManyPrefix + anyId + ':'
+    let finalOpt = {
+      ...opt,
+      lt: opt.lt && prefix + this.fixNumStr(opt.lte),
+      lte: opt.lte && prefix + this.fixNumStr(opt.lte),
+      gt: opt.gt && prefix + this.fixNumStr(opt.gt),
+      gte: opt.gte && prefix + this.fixNumStr(opt.gte)
+    }
+    var ids = await this.db.rangeValues(finalOpt)
+    var result = await this.mget(ids)
+    return result.map(this.convertValue)
+  }
+
 }
 
 export class EntityProvider extends Provider {

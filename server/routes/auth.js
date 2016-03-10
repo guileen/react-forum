@@ -54,7 +54,7 @@ router.get('/oauth2-callback/:site', async (ctx) => {
   }
   console.log('token:', token)
   // Get profile
-  let user = await getOrCreateUser(site, token)
+  let user = await getOrCreateUser(site, token, ctx.state.privacy)
   if (!user) {
     throw new Error('not create user')
   }
