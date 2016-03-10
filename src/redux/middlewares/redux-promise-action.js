@@ -1,6 +1,9 @@
 import fetchData from '../../apis/fetchData'
 
-export const makePromiseAction = (stateAction, promise, onDispatch) => (dispatch) => {
+export const dispatchPromise = (dispatch, stateAction, promise, onDispatch) => {
+  if (promise === undefined) {
+    throw new Error(`Promise is undefined. Check dispatchPromise:${stateAction}`)
+  }
   const d = (action) => {
     dispatch(action)
     onDispatch && onDispatch(dispatch, action.payload)
@@ -11,7 +14,7 @@ export const makePromiseAction = (stateAction, promise, onDispatch) => (dispatch
       pending: true
     }
   })
-  return promise
+  return Promise.resolve(promise)
   .then(result => {
     d({
       type: stateAction,
@@ -31,8 +34,15 @@ export const makePromiseAction = (stateAction, promise, onDispatch) => (dispatch
   })
 }
 
-export const createPromiseAction = (stateAction, promiseCreator, onFulfilled, onRejected) => (...args) =>
-  makePromiseAction(stateAction, promiseCreator(...args), onFulfilled, onRejected)
+export const makePromiseAction = (stateAction, promise, onDispatch) =>
+  (dispatch) => dispatchPromise(dispatch, stateAction, promise, onDispatch)
+
+export const createPromiseAction = (stateAction, promiseCreator, onFulfilled, onRejected) => (...args) => {
+  if (!promiseCreator) {
+    throw new Error(`promiseCreator is null, check createPromiseAction(${stateAction},...)`)
+  }
+  return makePromiseAction(stateAction, promiseCreator(...args), onFulfilled, onRejected)
+}
 
 export const createFetchAction = (stateAction, url, opt={}, onFulfilled, onRejected) => {
   const promiseCreator = (...args) => {
