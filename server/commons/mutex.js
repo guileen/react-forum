@@ -4,11 +4,7 @@ class PromiseState {
     this.prev = null
     this.next = null
     this.promise = new Promise((resolve, reject) => {
-      console.log('locking')
-      self._resolve = () => {
-        console.log('unlock')
-        resolve()
-      }
+      self._resolve = resolve
       self._reject = reject
     })
     this.timer = timeout && setTimeout(() => {
