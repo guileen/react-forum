@@ -12,11 +12,9 @@ export default class LDB {
   constructor(dbOpts) {
     this.db = new LevelUp(dbOpts)
     this._get = Promise.promisify(LevelUp.prototype.get, {context: this.db})
-    ;['open', 'close', 'batch'].forEach((method) => {
-      this[method] = Promise.promisify(LevelUp.prototype[method], {context: this.db})
+    ;['put', 'del', 'open', 'close', 'batch'].forEach((method) => {
+      this['_' + method] = Promise.promisify(LevelUp.prototype[method], {context: this.db})
     })
-    this._put = Promise.promisify(LevelUp.prototype.put, {context: this.db})
-    this._del = Promise.promisify(LevelUp.prototype.del, {context: this.db})
   }
 
   @trace
@@ -29,6 +27,12 @@ export default class LDB {
   async del(key) {
     console.log('ldb:DEL', key)
     return await this._del(key)
+  }
+
+  @trace
+  async batch(array, option = {}) {
+    console.log('ldb:BATCH\n'+array.map(op => `    ${op.type} ${op.key} ${op.value || ''}`).join('\n'))
+    await this._batch(array, option)
   }
 
   @trace
@@ -72,6 +76,7 @@ export default class LDB {
 
   @trace
   range(opts) {
+    console.log('ldb:RANGE', opts)
     const db = this.db
     return new Promise(function(resolve, reject) {
       const results = []

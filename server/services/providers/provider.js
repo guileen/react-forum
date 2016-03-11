@@ -1,5 +1,6 @@
 import {trace} from '../../commons/decorators'
 
+const MAX_NUM = '9'.repeat(20)
 export default class Provider {
   /**
    * @param db
@@ -83,52 +84,123 @@ export default class Provider {
    * lt, gt, lte, gte
    */
   @trace
-  async rangeValues(opt) {
-    let finalOpt = {
-      ...opt,
-      lt: opt.lt && this.key(opt.lt),
-      lte: opt.lte && this.key(opt.lte),
-      gt: opt.gt && this.key(opt.gt),
-      gte: opt.gte && this.key(opt.gte)
+  async rangeValues(opts={}) {
+    var opt = {...opts}
+    if (opt.lt == null && opt.lte == null) {
+      opt.lte = MAX_NUM
     }
-    var result = await this.db.rangeValues(finalOpt)
+    if (opt.gt == null && opt.gte == null) {
+      opt.gte = 0
+    }
+    if (opt.lt != null) {
+      opt.lt = this.key(opt.lt)
+    }
+    if (opt.lte != null) {
+      opt.lte = this.key(opt.lte)
+    }
+    if (opt.gt != null) {
+      opt.gt = this.key(opt.gt)
+    }
+    if (opt.gte != null) {
+      opt.gte = this.key(opt.gte)
+    }
+    var result = await this.db.rangeValues(opt)
     return result.map(this.convertValue)
   }
 
+  _bindManyKey(prefix, oneId, seq) {
+    return prefix + ':' + oneId + ':' + this.fixNumStr(seq)
+  }
+
+  @trace
   async bindOneToOne(toOnePrefix, targetId, oneId) {
-    await this.db.put(toOnePrefix + targetId, oneId)
+    throw new Error('not implement')
   }
 
   /**
    * author_user post
    *
    */
-  async bindAnyToMany(anyToManyPrefix, anyId, selfId) {
-    var seq = await this.db.incr('id:' + toManyPrefix + anyId)
-    await this.db.put(toManyPrefix + anyId + ':' + this.fixNumStr(seq), selfId)
+  @trace
+  async bindOneToMany(oneToManyPrefix, oneId, manyId) {
+    console.log('bindOneToMany', oneToManyPrefix, oneId, manyId)
+    if (oneId == null || manyId == null) return
+    var isBinded = await this.isBinded(oneToManyPrefix, oneId, manyId)
+    if (isBinded) {
+      return
+    }
+    var seq = await this.db.incr('id:' + oneToManyPrefix + ':' + oneId)
+    await this.db.batch([
+      {type: 'put', key: this._bindManyKey(oneToManyPrefix, oneId, seq), value: manyId},
+      {type: 'put', key: 'rseq:'+oneToManyPrefix + ':' + oneId + ':' + manyId, value: seq}
+    ])
+  }
+
+  @trace
+  async unbindOneToMany(oneToManyPrefix, oneId, manyId) {
+    console.log('unbindOneToMany', oneToManyPrefix, oneId, manyId)
+    if (oneId == null || manyId == null) return
+    var seq = await this.db.get('rseq:'+oneToManyPrefix + ':' + oneId + ':' + manyId)
+    if (!seq) {
+      return
+    }
+    await this.db.batch([
+      {type: 'del', key: this._bindManyKey(oneToManyPrefix, oneId, seq)},
+      {type: 'del', key: 'rseq:'+oneToManyPrefix + ':' + oneId + ':' + manyId}
+    ])
+  }
+
+  @trace
+  async isBinded(oneToManyPrefix, oneId, manyId) {
+    var seq = await this.db.get('rseq:'+oneToManyPrefix + ':' + oneId + ':' + manyId)
+    return !!seq
   }
 
   /**
    * voter_user  post
    *
    */
-  async bindManyToMany (aToBPrefix, bToAPrefix, aid, bid) {
-    await this.bindAnyToMany(aToBPrefix, aid, bid)
-    await this.bindAnyToMany(bToAPrefix, bid, aid)
+  @trace
+  async bindManyToMany(aToBPrefix, bToAPrefix, aid, bid) {
+    console.log('bindManyToMany', aToBPrefix, bToAPrefix, aid, bid)
+    if (aid == null || bid == null) return
+    await this.bindOneToMany(aToBPrefix, aid, bid)
+    await this.bindOneToMany(bToAPrefix, bid, aid)
   }
 
-  async rangeAnyToMany (anyToManyPrefix, anyId, opts) {
-    const prefix = anyToManyPrefix + anyId + ':'
-    let finalOpt = {
-      ...opt,
-      lt: opt.lt && prefix + this.fixNumStr(opt.lte),
-      lte: opt.lte && prefix + this.fixNumStr(opt.lte),
-      gt: opt.gt && prefix + this.fixNumStr(opt.gt),
-      gte: opt.gte && prefix + this.fixNumStr(opt.gte)
+  @trace
+  async unbindManyToMany(aToBPrefix, bToAPrefix, aid, bid) {
+    console.log('unbindManyToMany', aToBPrefix, bToAPrefix, aid, bid)
+    if (aid == null || bid == null) return
+    await this.unbindOneToMany(aToBPrefix, aid, bid)
+    await this.unbindOneToMany(bToAPrefix, bid, aid)
+  }
+
+  @trace
+  async rangeOneToMany (oneToManyPrefix, oneId, opts={}) {
+    const opt = {...opts}
+    console.log('rangeMany', opt)
+    const prefix = oneToManyPrefix + ':' + oneId + ':'
+    if (opt.lt == null && opt.lte == null) {
+      opt.lte = MAX_NUM
     }
-    var ids = await this.db.rangeValues(finalOpt)
-    var result = await this.mget(ids)
-    return result.map(this.convertValue)
+    if (opt.gt == null && opt.gte == null) {
+      opt.gte = 0
+    }
+    if (opt.lt != null) {
+      opt.lt = prefix + this.fixNumStr(opt.lt)
+    }
+    if (opt.gt != null) {
+      opt.gt = prefix + this.fixNumStr(opt.gt)
+    }
+    if (opt.lte != null) {
+      opt.lte = prefix + this.fixNumStr(opt.lte)
+    }
+    if (opt.gte != null) {
+      opt.gte = prefix + this.fixNumStr(opt.gte)
+    }
+    var ids = await this.db.rangeValues(opt)
+    return await this.mget(ids)
   }
 
 }
@@ -158,11 +230,13 @@ export class EntityProvider extends Provider {
   }
 
   @trace
-  save(obj) {
+  async save(obj) {
     if (!obj.id) {
-      return this.insert(obj)
+      await this.insert(obj)
+      return obj
     }
-    return this.put(obj.id, obj)
+    await this.put(obj.id, obj)
+    return obj
   }
 
 }
