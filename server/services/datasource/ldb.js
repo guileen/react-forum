@@ -1,3 +1,4 @@
+import {getMutex} from '../../commons/mutex'
 import trace from '../../commons/decorators/trace'
 
 import LevelUp from 'levelup'
@@ -11,17 +12,34 @@ export default class LDB {
   constructor(dbOpts) {
     this.db = new LevelUp(dbOpts)
     this._get = Promise.promisify(LevelUp.prototype.get, {context: this.db})
-    ;['put', 'del', 'open', 'close', 'batch'].forEach((method) => {
+    ;['open', 'close', 'batch'].forEach((method) => {
       this[method] = Promise.promisify(LevelUp.prototype[method], {context: this.db})
     })
+    this._put = Promise.promisify(LevelUp.prototype.put, {context: this.db})
+    this._del = Promise.promisify(LevelUp.prototype.del, {context: this.db})
+  }
+
+  @trace
+  async put(key, value) {
+    console.log('ldb:PUT', key, value)
+    return await this._put(key, value)
+  }
+
+  @trace
+  async del(key) {
+    console.log('ldb:DEL', key)
+    return await this._del(key)
   }
 
   @trace
   async incr(key, num=1) {
+    let mutex = getMutex(key)
+    await mutex.lock()
     let v = await this.get(key)
     let n = v == null ? 0 : parseInt(v, 10)
     n += num
     await this.put(key, '' + n)
+    mutex.unlock()
     return n
   }
 
