@@ -1,5 +1,5 @@
 import maindb from 'services/datasource/maindb'
-import Provider, {EntityProvider} from 'services/providers/provider'
+import {EntityProvider} from 'services/providers/provider'
 
 import {expect} from 'chai'
 
@@ -19,7 +19,6 @@ class PostProvider extends EntityProvider {
   }
 
   async save(post) {
-    console.log('saving', post)
     await super.save(post)
     await this.bindOneToMany('user_posts', post.userId, post.id)
     return post

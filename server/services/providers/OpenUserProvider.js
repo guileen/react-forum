@@ -1,8 +1,6 @@
 import {trace} from '../../commons/decorators'
 import {EntityProvider} from './provider'
 
-const OPENID_TO_UID = 'oid_to_uid:'
-
 export default class OpenUserProvider extends EntityProvider {
   constructor(db, userProvider) {
     super(db, 'openuser')
@@ -10,37 +8,55 @@ export default class OpenUserProvider extends EntityProvider {
   }
 
   @trace
+  async bindUser(site, profile, userId) {
+    const id = OpenUserProvider.getOpenId(site, profile)
+    const openuser = await this.get(id)
+    const oldUserId = openuser && openuser.userId
+    if (oldUserId === userId) return
+    var oldUser = oldUserId && await this.userProvider.get(oldUserId)
+    if (oldUser) throw new Error(`User is already bind by user: ${oldUserId} name: ${oldUser.name}`)
+    var user = this.userProvider.get(userId)
+    if (!user) throw new Error(`User ${userId} is not exists`)
+    await this.save({
+      id: id,
+      userId: userId,
+      site: site,
+      profile: profile
+    })
+    await this.bindOneToMany('user_openusers', userId, id)
+  }
+
+  @trace
   async getOrCreateUser(site, profile, props) {
-    const openId = OpenUserProvider.getOpenId(site, profile)
-    var userId = await this.getUserIdByOpenId(openId)
+    const id = OpenUserProvider.getOpenId(site, profile)
+    const openuser = await this.get(id)
+    var userId = openuser && openuser.userId
     var user = userId && await this.userProvider.get(userId)
     if (!user) {
       // generate user
       user = OpenUserProvider.makeUserInfo(site, profile, props)
       userId = await this.userProvider.insert(user)
-      await this.bindOpenIdToUserId(openId, userId)
-      await this.put(openId, {
+      await this.save({
+        id: id,
+        userId: userId,
         site: site,
         profile: profile
       })
+      await this.bindOneToMany('user_openusers', userId, id)
     }
     return user
   }
 
   @trace
-  async bindUser(site, profile, userId) {
-    const openId = OpenUserProvider.getOpenId(site, profile)
-    await this.bindOpenIdToUserId(openId, userId)
+  async del(id) {
+    var openuser = await this.get(id)
+    await super.del(id)
+    await this.unbindOneToMany('user_openusers', openuser.userId, id)
   }
 
   @trace
-  async getUserIdByOpenId(openId) {
-    return await this.db.get(OPENID_TO_UID + openId)
-  }
-
-  @trace
-  async bindOpenIdToUserId(openId, userId) {
-    return await this.db.put(OPENID_TO_UID + openId, userId)
+  async getOpenUsersByUserId(userId) {
+    return this.rangeOneToMany('user_openusers', userId)
   }
 
   static getOpenId(site, profile) {
