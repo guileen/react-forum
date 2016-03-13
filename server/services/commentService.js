@@ -1,9 +1,8 @@
 import {userProvider, commentProvider} from './providers'
 
 export const getLatest = (postId, cursor=0, limit=30) => {
-  return commentProvider.rangeValues({
-    gte: [postId, cursor],
-    lte: [postId, '99999999999999999999'],
+  return commentProvider.listOfPostId(postId, {
+    gte: cursor,
     reverse: true,
     limit: limit
   }).then(comments => {
