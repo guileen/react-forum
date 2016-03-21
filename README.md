@@ -263,6 +263,21 @@ While this is common to any sizable application, it's worth noting for those who
 ```
 
 # TODO
+- [x] delete post
+- [ ] delete comment
+- [ ] New post notification
+- [ ] New comment notification
+- [ ] New vote notification
+- [ ] XSS, long text escape
+- [ ] Markdown support
+- [x] Upload image
+- [ ] Link autoparse
+- [ ] @somebody
+- [ ] Link video
+- [ ] Upload video
+- [ ] Internationalization.
+- [ ] +1 post
+- [ ] +1 comment
 - [x] Framework: webpack, babel, redux, react, dev-server.
 - [x] react-router integration.
 - [x] Example Component and Action.
@@ -271,23 +286,22 @@ While this is common to any sizable application, it's worth noting for those who
 - [x] Github oauth integration.
 - [x] Server side storage.
 - [x] Session and login.
-- [ ] Make empty components.
-- [ ] material-ui theme, styles.
-- [ ] Action:AccountActions  signin, signout, updateProfile, updateSettings
-- [ ] Component:Home page base layout.
-- [ ] Component:Navbar
+- [x] Make empty components.
+- [x] material-ui theme, styles.
+- [x] Action:AccountActions  signin, signout
+- [x] updateProfile, updateSettings
+- [x] Component:Home page base layout.
+- [x] Component:Navbar
 - [ ] Component:About page.
 - [ ] Component:SignIn page.
 - [ ] Component:Profile page.
-- [ ] Component:NewPost page
-- [ ] Component:PostEditor
-- [ ] Component:PostList page.
-- [ ] Component:PostListItem
-- [ ] Component:Avatar
-- [ ] Component:PostDetail page.
-- [ ] Component:Post
-- [ ] Component:Comment
-- [ ] Component:CommentEditor
+- [x] Component:NewPost page
+- [x] Component:PostEditor
+- [x] Component:PostList page.
+- [x] Component:PostListItem
+- [x] Component:Avatar
+- [x] Component:PostDetail page.
+- [x] Component:CommentEditor
 - [ ] Component:NotificationList page
 - [ ] Component:NotificationListItem
 - [ ] Component:UserDetail page.
