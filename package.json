@@ -79,6 +79,7 @@
     "material-ui": "^0.14.4",
     "react": "^0.14.0",
     "react-dom": "^0.14.0",
+    "react-dropzone": "^3.3.2",
     "react-redux": "^4.0.0",
     "react-refetch": "^0.7.0-beta.4",
     "react-router": "^2.0.0",

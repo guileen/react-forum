@@ -18,5 +18,12 @@ module.exports = {
       scope: 'user:email,notifications',
       state: '1234' // secret state
     }
+  },
+  qiniu: {
+    bucket: {
+      image: 'ipub-upload'
+    },
+    key: 'qiniu_key',
+    secret: 'qiniu_secret'
   }
 }

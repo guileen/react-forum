@@ -63,7 +63,7 @@ class HeaderBar extends React.Component {
                   <span className='icon-bar'></span>
                   <span className='icon-bar'></span>
                 </button>
-                <Link className='navbar-brand' to='/'>React Forum</Link>
+                <Link className='navbar-brand' to='/'>React Forum(dev)</Link>
               </div>
               <div id='navbar' className='collapse navbar-collapse'>
                 {rightNav}

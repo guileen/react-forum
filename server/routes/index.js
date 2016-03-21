@@ -4,6 +4,7 @@ import router from './router'
 import './auth'
 import './user'
 import './post'
+import './qiniu'
 
 router.get('/', function(ctx, next) {
   ctx.body = {
