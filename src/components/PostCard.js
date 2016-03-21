@@ -51,13 +51,13 @@ class PostCard extends Component {
     )
 
     const medias = post.files ? post.files.map(file => (
-      <CardMedia>
+      <CardMedia key={file.url}>
         <img src={file.url}/>
       </CardMedia>
     )) : ''
 
     return (
-      <Card style={{marginTop: 20}}>
+      <Card style={{marginTop: 20}} key={post.id}>
         <CardHeader
           title={post.user.name}
           subtitle='xxxxx'

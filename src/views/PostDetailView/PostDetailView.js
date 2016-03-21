@@ -7,6 +7,7 @@ import CommentCard from 'components/CommentCard'
 import CommentEditor from 'components/CommentEditor'
 import Card from 'material-ui/lib/card/card'
 import CardText from 'material-ui/lib/card/card-text'
+import CardMedia from 'material-ui/lib/card/card-media'
 import CardHeader from 'material-ui/lib/card/card-header'
 
 export class PostDetailView extends Component {
@@ -60,7 +61,11 @@ export class PostDetailView extends Component {
       <CommentCard comment={comment}/>
       // <ListItem primaryText={comment.text} leftAvatar={<Avatar src={comment.user.avatarUrl} />} />
     ))
-    console.log('commentEditorText', this.props.commentEditorText)
+    const medias = post.files ? post.files.map(file => (
+      <CardMedia key={file.url}>
+        <img src={file.url}/>
+      </CardMedia>
+    )) : ''
 
     return (
       <div className='container'>
@@ -88,6 +93,7 @@ export class PostDetailView extends Component {
               <CardText>
                 {post.text}
               </CardText>
+              {medias}
             </Card>
           </div>
         </div>
