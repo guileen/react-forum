@@ -8,6 +8,7 @@ import CardMedia from 'material-ui/lib/card/card-media'
 import Dropzone from 'react-dropzone'
 import RaisedButton from 'material-ui/lib/raised-button'
 import TextField from 'material-ui/lib/text-field'
+import CircularProgress from 'material-ui/lib/circular-progress'
 
 class SimpleEditor extends React.Component {
   static propTypes = {
@@ -25,7 +26,8 @@ class SimpleEditor extends React.Component {
     this.onChange = this.onChange.bind(this)
     this.onDrop = this.onDrop.bind(this)
     this.state = {
-      files: []
+      fileIds: [],
+      fileMap: {}
     }
   }
 
@@ -39,22 +41,41 @@ class SimpleEditor extends React.Component {
   }
 
   onDrop (files) {
+    // files is a FileList(https://developer.mozilla.org/en/docs/Web/API/FileList) Object
+    // update state
+    const newFilesMap = {}
     files.map(file => {
-      uploadQiniu(file, key).then(json => {
-        console.log('qiniu res:', json)
-      })
+      newFilesMap[file.preview] = {
+        preview: file.type.indexOf('image') >= 0 ? file.preview : 'http://xxx'
+      }
     })
     this.setState({
-      files: this.state.files.concat(files.map(file => ({
-        preview: file.type.indexOf('image') >= 0 ? file.preview : 'http://xxx'
-      })))
-    }, () => console.log('state.files: ', this.state.files))
-    // files is a FileList(https://developer.mozilla.org/en/docs/Web/API/FileList) Object
-    // and with each file, we attached two functions to handle upload progress and result
-    // file.request => return super-agent uploading file request
-    // file.uploadPromise => return a Promise to handle uploading status(what you can do when upload failed)
-    // `react-qiniu` using bluebird, check bluebird API https://github.com/petkaantonov/bluebird/blob/master/API.md
-    // see more example in example/app.js
+      fileIds: this.state.fileIds.concat(files.map(file => file.preview)),
+      fileMap: {
+        ...this.state.fileMap,
+        ...newFilesMap
+      }
+    }, () => console.log('state: ', this.state))
+
+    // upload and update state
+    var self = this
+    files.map(file => {
+      uploadQiniu(file).then(json => {
+        console.log('qiniu.res', json)
+        self.setState({
+          ...this.state,
+          fileMap: {
+            ...this.state.fileMap,
+            [file.preview]: {
+              ...this.state.fileMap[file.preview],
+              key: json.key,
+              bucket: json.bucket,
+              done: true
+            }
+          }
+        })
+      })
+    })
   }
 
   onChange() {
@@ -66,7 +87,14 @@ class SimpleEditor extends React.Component {
   }
 
   onPostTap() {
-    this.props.requestAddNewPost({text: this.refs.textField.getValue()})
+    var postBody = {
+      text: this.refs.textField.getValue(),
+      files: this.state.fileIds.map(id => ({
+        key: this.state.fileMap[id].key,
+        bucket: this.state.fileMap[id].bucket
+      }))
+    }
+    this.props.requestAddNewPost(postBody)
   }
 
   getValue() {
@@ -75,8 +103,17 @@ class SimpleEditor extends React.Component {
 
   render() {
     console.log('render', this.state.files)
+    const {fileIds, fileMap} = this.state
     const {editor, newPost} = this.props
-    const previews = this.state.files.map(file => (<img src={file.preview} style={{width: 40, height: 40}}/>))
+    const previews = fileIds.map(id => {
+      const file = fileMap[id]
+      return (
+        <div>
+          <img src={file.preview} style={{width: 40, height: 40}}/>
+          {file.done ? '' : <CircularProgress />}
+        </div>
+      )
+    })
     return (
       <Dropzone
         ref='dropzone'

@@ -5,6 +5,7 @@ import {actionCreators} from 'redux/modules/post'
 import Card from 'material-ui/lib/card/card'
 import CardText from 'material-ui/lib/card/card-text'
 import CardHeader from 'material-ui/lib/card/card-header'
+import CardMedia from 'material-ui/lib/card/card-media'
 import CardAction from 'material-ui/lib/card/card-actions'
 import IconMenu from 'material-ui/lib/menus/icon-menu'
 import MenuItem from 'material-ui/lib/menus/menu-item'
@@ -49,6 +50,12 @@ class PostCard extends Component {
       </IconMenu>
     )
 
+    const medias = post.files ? post.files.map(file => (
+      <CardMedia>
+        <img src={file.url}/>
+      </CardMedia>
+    )) : ''
+
     return (
       <Card style={{marginTop: 20}}>
         <CardHeader
@@ -60,6 +67,7 @@ class PostCard extends Component {
         <CardText>
           {post.text}
         </CardText>
+        {medias}
         <CardAction>
           {/* <FlatButton label='+1' /> */}
           <Link to={`/post/${post.id}`}>

@@ -2,13 +2,18 @@ import fetch from 'isomorphic-fetch'
 import {postJson} from './fetchData'
 export const uploadQiniu = (file, key) => {
   return postJson('/v1/qiniu/uptoken', {
-    type: 'image'
+    bucket: 'image'
   }).then(data => {
     return uploadFile('http://upload.qiniu.com', {
       token: data.token
     }, file)
-  }).then(res => {
-    return res.json()
+    .then(res => res.json())
+    .then(json => {
+      return {
+        bucket: data.bucket,
+        key: json.key
+      }
+    })
   })
 }
 
