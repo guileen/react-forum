@@ -34,8 +34,6 @@ class PostCard extends Component {
 
   render() {
     const {post, loginUser} = this.props
-    console.log('post', post)
-    console.log('loginUser', loginUser)
     const menu = (
       <IconMenu
         style={{float: 'right'}}

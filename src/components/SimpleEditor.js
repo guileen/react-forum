@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react'
 import { connect } from 'react-redux'
 import { actionCreators } from '../redux/modules/post'
+import { sendNewPost } from '../apis/post'
 import { uploadQiniu } from '../apis/upload'
 import Card from 'material-ui/lib/card/card'
 import CardActions from 'material-ui/lib/card/card-actions'
@@ -12,11 +13,7 @@ import CircularProgress from 'material-ui/lib/circular-progress'
 
 class SimpleEditor extends React.Component {
   static propTypes = {
-    token: PropTypes.string,
-    editor: PropTypes.object,
-    newPost: PropTypes.object,
-    setEditorText: PropTypes.func.isRequired,
-    requestAddNewPost: PropTypes.func.isRequired
+    addNewPost: PropTypes.func.isRequired
   };
 
   constructor(props) {
@@ -26,9 +23,18 @@ class SimpleEditor extends React.Component {
     this.onChange = this.onChange.bind(this)
     this.onDrop = this.onDrop.bind(this)
     this.state = {
+      pending: false,
+      text: '',
       fileIds: [],
       fileMap: {}
     }
+  }
+
+  onChange (e) {
+    this.setState({
+      ...this.state,
+      text: e.target.value
+    })
   }
 
   onUpload (files) {
@@ -61,7 +67,6 @@ class SimpleEditor extends React.Component {
     var self = this
     files.map(file => {
       uploadQiniu(file).then(json => {
-        console.log('qiniu.res', json)
         self.setState({
           ...this.state,
           fileMap: {
@@ -78,10 +83,6 @@ class SimpleEditor extends React.Component {
     })
   }
 
-  onChange() {
-    this.props.setEditorText(this.refs.textField.getValue())
-  }
-
   onUploadTap() {
     this.refs.dropzone.open()
   }
@@ -94,17 +95,19 @@ class SimpleEditor extends React.Component {
         bucket: this.state.fileMap[id].bucket
       }))
     }
-    this.props.requestAddNewPost(postBody)
-  }
-
-  getValue() {
-    return this.props.editor.text
+    const self = this
+    sendNewPost(postBody).then((data) => {
+      self.setState({
+        text: '',
+        fileIds: [],
+        fileMap: {}
+      })
+      self.props.addNewPost(data)
+    })
   }
 
   render() {
-    console.log('render', this.state.files)
     const {fileIds, fileMap} = this.state
-    const {editor, newPost} = this.props
     const previews = fileIds.map(id => {
       const file = fileMap[id]
       return (
@@ -119,7 +122,6 @@ class SimpleEditor extends React.Component {
         ref='dropzone'
         onDrop={this.onDrop}
         style={{width: '100%'}}
-        token={this.props.token || 'test'}
         onUpload={this.onUpload}
         activeStyle={{border: '2px dashed #0f0', margin: -2}}
         disableClick={true}
@@ -130,14 +132,13 @@ class SimpleEditor extends React.Component {
             <TextField
               ref='textField'
               hintText='Say somthing'
-              // floatingLabelText='Say somthing ...'
               style={{width: '100%'}}
               multiLine={true}
               rows={1}
               rowsMax={10}
-              value={editor.text}
+              value={this.state.text}
               onChange={this.onChange}
-              disabled={newPost.pending}
+              disabled={this.state.pending}
               />
             <div>{previews}</div>
           </CardMedia>
@@ -145,13 +146,13 @@ class SimpleEditor extends React.Component {
             <RaisedButton
               label='Upload'
               onTouchTap={this.onUploadTap}
-              disabled={newPost.pending}
+              disabled={this.state.pending}
             />
             <RaisedButton
               label='Post'
               secondary={true}
               onTouchTap={this.onPostTap}
-              disabled={newPost.pending}
+              disabled={this.state.pending}
             />
           </CardActions>
         </Card>
@@ -160,7 +161,4 @@ class SimpleEditor extends React.Component {
   }
 }
 
-export default connect(state => ({
-  newPost: state.post.newPost,
-  editor: state.post.editor
-}), actionCreators)(SimpleEditor)
+export default connect(state => ({}), actionCreators)(SimpleEditor)
