@@ -20,10 +20,13 @@ module.exports = {
     }
   },
   qiniu: {
-    bucket: {
-      image: 'ipub-upload'
+    buckets: {
+      image: {
+        bucket: 'ipub-upload',
+        host: 'http://7xs2z7.com1.z0.glb.clouddn.com'
+      }
     },
-    key: 'qiniu_key',
-    secret: 'qiniu_secret'
+    key: '',
+    secret: ''
   }
 }

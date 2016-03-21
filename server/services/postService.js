@@ -1,4 +1,5 @@
 import {userProvider, postProvider} from './providers'
+import {getResourceURL} from './vendor/cdn'
 
 // default params not working with async with babel
 export const getLatest = (cursor=0, limit=30) => {
@@ -14,6 +15,10 @@ export const getLatest = (cursor=0, limit=30) => {
 
 export const loadPostCard = async (post) => {
   post.user = await userProvider.get(post.userId)
+  post.files = post.files && post.files.map(file => ({
+    ...file,
+    url: getResourceURL(file)
+  }))
   return post
 }
 

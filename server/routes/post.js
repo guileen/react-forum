@@ -9,6 +9,9 @@ router.post('/post', requireLogin, async (ctx) => {
     text: body.text,
     userId: ctx.state.userId
   }
+  if (body.files && body.files.length) {
+    post.files = body.files
+  }
   var id = await postProvider.insert(post)
   post.id = id
   await postService.loadPostCard(post)
