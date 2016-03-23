@@ -15,6 +15,7 @@ export const getLatest = (cursor=0, limit=30) => {
 
 export const loadPostCard = async (post) => {
   post.user = await userProvider.get(post.userId)
+  post.html = post.html || post.text || ''
   post.files = post.files && post.files.map(file => ({
     ...file,
     url: getResourceURL(file)
