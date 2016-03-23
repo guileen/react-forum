@@ -62,9 +62,7 @@ class PostCard extends Component {
           avatar={post.user.avatarUrl}
           children={menu}
         />
-        <CardText>
-          {post.text}
-        </CardText>
+        <CardText dangerouslySetInnerHTML={{__html: post.html}} />
         {medias}
         <CardAction>
           {/* <FlatButton label='+1' /> */}

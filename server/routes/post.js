@@ -2,11 +2,22 @@ import router from './router'
 import {requireLogin} from '../middleware/authorize'
 import {postProvider, commentProvider, userProvider} from '../services/providers'
 import {postService, commentService} from '../services'
+import marked from 'marked'
+marked.setOptions({
+  renderer: new marked.Renderer(),
+  gfm: true,
+  tables: true,
+  breaks: true,
+  pedantic: false,
+  smartLists: true,
+  smartypants: false
+})
 
 router.post('/post', requireLogin, async (ctx) => {
   var body = ctx.request.body
   var post = {
     text: body.text,
+    html: marked(body.text),
     userId: ctx.state.userId
   }
   if (body.files && body.files.length) {
