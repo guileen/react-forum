@@ -6,6 +6,9 @@ react-forum
 [![devDependency Status](https://david-dm.org/guileen/react-forum/dev-status.svg)](https://david-dm.org/guileen/react-forum#info=devDependencies)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
 
+
+Base on [react-redux-starter-kit](github.com/davezuko/react-redux-starter-kit)
+
 Table of Contents
 -----------------
 1. [Requirements](#requirements)
@@ -263,21 +266,23 @@ While this is common to any sizable application, it's worth noting for those who
 ```
 
 # TODO
-- [x] delete post
-- [ ] delete comment
-- [ ] New post notification
-- [ ] New comment notification
-- [ ] New vote notification
-- [ ] XSS, long text escape
-- [ ] Markdown support
-- [x] Upload image
-- [ ] Link autoparse
+- [ ] log out
 - [ ] @somebody
 - [ ] Link video
 - [ ] Upload video
 - [ ] Internationalization.
 - [ ] +1 post
 - [ ] +1 comment
+- [ ] delete comment
+- [ ] New post notification
+- [ ] New comment notification
+- [ ] New vote notification
+- [ ] XSS, long text escape
+- [ ] Link crawler
+- [x] delete post
+- [x] Markdown support
+- [x] Upload image
+- [x] Link autoparse
 - [x] Framework: webpack, babel, redux, react, dev-server.
 - [x] react-router integration.
 - [x] Example Component and Action.
@@ -288,7 +293,7 @@ While this is common to any sizable application, it's worth noting for those who
 - [x] Session and login.
 - [x] Make empty components.
 - [x] material-ui theme, styles.
-- [x] Action:AccountActions  signin, signout
+- [x] Action:AccountActions  signin
 - [x] updateProfile, updateSettings
 - [x] Component:Home page base layout.
 - [x] Component:Navbar
